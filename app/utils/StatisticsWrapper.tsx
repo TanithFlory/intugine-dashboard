@@ -1,18 +1,13 @@
-import { HTMLAttributes } from "react";
-
-interface IProps extends HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-  className?: string;
-}
+import { Wrapper } from "@/types";
 
 export default function StatisticsWrapper({
   children,
   className,
   ...props
-}: IProps) {
+}: Wrapper) {
   return (
     <div
-      className={`${className} border-[1px] border-borderColor rounded-[8px] py-[12px] px-[24px]`}
+      className={`${className} border-[1px] border-borderColor rounded-[8px] py-[12px] px-[24px] h-[100px] w-full`}
       {...props}
     >
       {children}

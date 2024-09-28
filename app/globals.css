@@ -1,31 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   --white: #fff;
   --black: #000;
   --primary-color: #243146;
   --button-color: #0057d1;
-  --border-color: #00c28b;
+  --border-color: #e0e0e0;
   --secondary-text: #666666;
 
   /* Status colors */
   --trip-status: #d7e3fe;
   --trip-status-text: #24428a;
-  --delayed: #d7e3fe;
+  --delayed: #ffeeee;
   --delayed-text: #cc3333;
   --on-time: #d7e3fe;
   --on-time-text: #008f66;
   --progress: #00c28b;
   --other-status: #ffecdb;
   --other-status-text: #d97f30;
+
+  /* Font Sizes */
+
+  --fs-100: 0.75rem;
+  --fs-200: 0.875rem;
+  --fs-300: 1rem;
+  --fs-400: 1.5rem;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 @layer utilities {

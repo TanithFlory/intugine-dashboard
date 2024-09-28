@@ -28,6 +28,12 @@ const config: Config = {
         otherStatusText: "var(--other-status-text)",
       },
     },
+    fontSize: {
+      "fs-100": "var(--fs-100)",
+      "fs-200": "var(--fs-200)",
+      "fs-300": "var(--fs-300)",
+      "fs-400": "var(--fs-400)",
+    },
   },
   plugins: [],
 };
