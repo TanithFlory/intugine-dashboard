@@ -3,15 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --white: #fff;
+  --black: #000;
+  --primary-color: #243146;
+  --button-color: #0057d1;
+  --border-color: #00c28b;
+  --secondary-text: #666666;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Status colors */
+  --trip-status: #d7e3fe;
+  --trip-status-text: #24428a;
+  --delayed: #d7e3fe;
+  --delayed-text: #cc3333;
+  --on-time: #d7e3fe;
+  --on-time-text: #008f66;
+  --progress: #00c28b;
+  --other-status: #ffecdb;
+  --other-status-text: #d97f30;
 }
 
 body {
