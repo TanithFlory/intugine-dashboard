@@ -31,8 +31,8 @@ export default function TripTable() {
   return (
     <SectionWrapper>
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
-        <h3 className="text-fs-300 font-bold py-[12px] px-[20px]">Trip List</h3>
-        <table className="min-w-full table-auto text-fs-100">
+        <h3 className="text-fs-16 font-bold py-[12px] px-[20px]">Trip List</h3>
+        <table className="min-w-full table-auto text-fs-12">
           <thead className="bg-[#F8F8F8] ">
             <tr className="text-left h-[44px] flex items-center gap-4">
               {columns.map((column, index) => (
