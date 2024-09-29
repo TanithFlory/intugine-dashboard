@@ -1,4 +1,5 @@
 import SectionWrapper from "@/app/utils/SectionWrapper";
+import TableFooter from "../TableFooter/TableFooter";
 
 export default function TripTable() {
   const columns = [
@@ -78,6 +79,7 @@ export default function TripTable() {
               </tr>
             ))}
           </tbody>
+          <TableFooter />
         </table>
       </div>
     </SectionWrapper>
