@@ -4,22 +4,13 @@ import StatisticsCard from "@/app/utils/StatisticsCard";
 import StatisticsWrapper from "@/app/utils/StatisticsWrapper";
 
 export default function Statistics() {
-  const stats = [
-    {
-      title: "Total Trips",
-      value: "18,033",
-      className: "w-[240px] flex flex-col justify-between",
-    },
-    { title: "Delivered", value: "18,033", className: "max-w-[352px]" },
-  ];
-
   return (
     <SectionWrapper>
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 w-full">
         <StatisticsWrapper className="flex flex-col justify-between w-[248px]">
           <StatisticsCard title={"Total Trips"} value={"18,033"} />
         </StatisticsWrapper>
-        <StatisticsWrapper className="max-w-[352px] flex items-center !p-0">
+        <StatisticsWrapper className="w-[352px] flex items-center !p-0">
           <div className="flex flex-col justify-between w-[184px] pl-[24px] py-[12px] h-full">
             <StatisticsCard title={"Delivered"} value={"18,033"} />
           </div>
