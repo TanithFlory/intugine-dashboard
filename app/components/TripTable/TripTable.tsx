@@ -2,22 +2,22 @@ import SectionWrapper from "@/app/utils/SectionWrapper";
 
 export default function TripTable() {
   const columns = [
-    { label: "", width: "w-28" }, // Checkbox column
-    { label: "Trip ID", width: "w-28" },
-    { label: "Transporter", width: "w-24" },
-    { label: "Source", width: "w-32" },
-    { label: "Destination", width: "w-32" },
-    { label: "Phone", width: "w-20" },
-    { label: "ETA", width: "w-28" },
-    { label: "Distance Remaining", width: "w-30" },
-    { label: "Trip Status", width: "w-28" },
-    { label: "TAT Status", width: "w-26" },
+    { label: "", width: "w-[50px]" }, // Checkbox column
+    { label: "Trip ID", width: "w-[112px]" },
+    { label: "Transporter", width: "w-[100px]" },
+    { label: "Source", width: "w-[128px]" },
+    { label: "Destination", width: "w-[128px]" },
+    { label: "Phone", width: "w-[80px]" },
+    { label: "ETA", width: "w-[112px]" },
+    { label: "Distance Remaining", width: "w-[120px]" },
+    { label: "Trip Status", width: "w-[118px]" },
+    { label: "TAT Status", width: "w-[104px]" },
   ];
 
   const rows = [
     {
       tripId: "12345",
-      transporter: "ABC Logistics",
+      transporter: "BlueDart",
       source: "New York",
       destination: "Los Angeles",
       phone: "9902713573",
@@ -33,17 +33,20 @@ export default function TripTable() {
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
         <h3 className="text-fs-300 font-bold py-[12px] px-[20px]">Trip List</h3>
         <table className="min-w-full table-auto text-fs-100">
-          <thead className="bg-[#F8F8F8]">
-            <tr className="text-left h-[40px]">
+          <thead className="bg-[#F8F8F8] ">
+            <tr className="text-left h-[44px] flex items-center gap-4">
               {columns.map((column, index) => (
                 <th
                   key={index}
-                  className={`box-border px-4 py-2 ${column.width} ${
-                    index === 0 ? "pl-[20px] w-[50px]" : ""
+                  className={`box-border ${column.width} ${
+                    index === 0 ? "flex items-center justify-center" : ""
                   }`}
                 >
                   {index === 0 ? (
-                    <input type="checkbox" className="w-[16px] h-[16px]" />
+                    <input
+                      type="checkbox"
+                      className="w-[16px]  bg-[#FFFFFF] h-[16px]"
+                    />
                   ) : (
                     column.label
                   )}
@@ -53,19 +56,25 @@ export default function TripTable() {
           </thead>
           <tbody className="gap-4">
             {rows.map((row, rowIndex) => (
-              <tr key={rowIndex} className="border-t h-[40px]">
-                <td className="px-4 py-2 pl-[20px] ">
-                  <input type="checkbox" className="w-[16px] h-[16px]" />
+              <tr
+                key={rowIndex}
+                className="border-t h-[44px] flex gap-4 items-center"
+              >
+                <td className="w-[50px] flex items-center justify-center">
+                  <input
+                    type="checkbox"
+                    className="w-[16px] accent-black h-[16px]"
+                  />
                 </td>
-                <td className="px-4 py-2">{row.tripId}</td>
-                <td className="px-4 py-2">{row.transporter}</td>
-                <td className="px-4 py-2">{row.source}</td>
-                <td className="px-4 py-2">{row.destination}</td>
-                <td className="px-4 py-2">{row.phone}</td>
-                <td className="px-4 py-2">{row.eta}</td>
-                <td className="px-4 py-2">{row.distanceRemaining}</td>
-                <td className="px-4 py-2">{row.tripStatus}</td>
-                <td className="px-4 py-2">{row.tatStatus}</td>
+                <td className="w-[112px]">{row.tripId}</td>
+                <td className="w-[100px]">{row.transporter}</td>
+                <td className="w-[128px]">{row.source}</td>
+                <td className="w-[128px]">{row.destination}</td>
+                <td className="w-[80px]">{row.phone}</td>
+                <td className="w-[112px]">{row.eta}</td>
+                <td className="w-[120px]">{row.distanceRemaining}</td>
+                <td className="w-[118px]">{row.tripStatus}</td>
+                <td className="w-[104px]">{row.tatStatus}</td>
               </tr>
             ))}
           </tbody>
