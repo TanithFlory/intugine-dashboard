@@ -2,7 +2,7 @@ import SectionWrapper from "@/app/utils/SectionWrapper";
 import TableFooter from "../TableFooter/TableFooter";
 import Status from "@/app/utils/Status";
 import { StatusType } from "@/types";
-import PrimaryButton from "@/app/utils/PrimaryButton";
+import TripControls from "./TripControls";
 
 export default function TripTable() {
   const columns = [
@@ -147,16 +147,7 @@ export default function TripTable() {
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
         <div className="flex items-center justify-between px-[20px]">
           <h3 className="text-fs-16 font-bold py-[12px]">Trip List</h3>
-          <div className="flex items-center gap-[17px] w-[210px]">
-            <PrimaryButton
-              text="Update status"
-              className="max-w-[96px] bg-white border-[1px] border-buttonColor text-buttonColor"
-            />
-            <PrimaryButton
-              text="Add trip"
-              className="max-w-[96px] bg-buttonColor"
-            />
-          </div>
+          <TripControls />
         </div>
         <table className="min-w-full table-auto text-fs-12">
           <thead className="bg-[#F8F8F8] ">

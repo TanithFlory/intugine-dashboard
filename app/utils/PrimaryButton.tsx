@@ -6,7 +6,7 @@ interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 function PrimaryButton({ text, className, ...props }: PrimaryButtonProps) {
   return (
-    <button className={`h-[32px] w-full text-white text-fs-12 ${className} rounded-[4px]`} {...props}>
+    <button className={`h-[32px] w-full text-fs-12 ${className} rounded-[4px]`} {...props}>
       {text}
     </button>
   );

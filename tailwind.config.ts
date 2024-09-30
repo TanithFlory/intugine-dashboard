@@ -35,6 +35,7 @@ const config: Config = {
       "fs-12": "var(--fs-12)",
       "fs-14": "var(--fs-14)",
       "fs-16": "var(--fs-16)",
+      "fs-20": "var(--fs-20)",
       "fs-24": "var(--fs-24)",
     },
   },
