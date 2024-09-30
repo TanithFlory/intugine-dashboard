@@ -167,7 +167,7 @@ export default function TripTable() {
               ))}
             </tr>
           </thead>
-          <tbody className="gap-4">
+          <tbody className="gap-4 font-sans">
             {rows.map((row, rowIndex) => {
               const {
                 tripId,

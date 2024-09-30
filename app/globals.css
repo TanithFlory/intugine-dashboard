@@ -14,9 +14,9 @@
   /* Status colors */
   --trip-status: #d7e3fe;
   --trip-status-text: #24428a;
-  --delayed: #F9D7D7;
+  --delayed: #f9d7d7;
   --delayed-text: #cc3333;
-  --on-time: #B8EDDE;
+  --on-time: #b8edde;
   --on-time-text: #008f66;
   --progress: #00c28b;
   --other-status: #ffecdb;
@@ -37,5 +37,14 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer {
+  @font-face {
+    font-family: "Source Sans Pro";
+    src: url("./assets/fonts/source-sans-pro.regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
   }
 }
