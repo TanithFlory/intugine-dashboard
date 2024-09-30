@@ -6,3 +6,5 @@ export interface Wrapper extends HTMLAttributes<HTMLDivElement> {
 }
 
 export type StatusType = "On Time" | "Delayed" | "Other";
+
+export type CloseModalType = React.MouseEvent<HTMLDivElement>;

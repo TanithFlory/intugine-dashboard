@@ -3,14 +3,14 @@ import { CloseModalType } from "@/types";
 import CloseModal from "@/app/utils/CloseModal";
 import InputFields from "./InputFields";
 
-export default function AddTrip({
+export default function UpdateStatus({
   handleCloseModal,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
 }) {
   return (
-    <form className="bg-white px-[24px] pt-[20px] w-[648px] h-[392px] relative">
-      <h3 className="text-fs-20 font-bold mb-[36px]">Add Trip</h3>
+    <form className="bg-white px-[24px] pt-[20px] w-[328px] h-[312px] relative">
+      <h3 className="text-fs-20 font-bold mb-[36px]">Update status</h3>
       <InputFields />
       <div className="flex items-center gap-4 py-4 border-t-borderColor border-t-[1px] justify-end">
         <PrimaryButton
@@ -19,8 +19,8 @@ export default function AddTrip({
           type="reset"
         />
         <PrimaryButton
-          text="Add trip"
-          className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[77px] text-black"
+          text="Update status"
+          className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[111px] text-black"
           type="submit"
         />
       </div>
