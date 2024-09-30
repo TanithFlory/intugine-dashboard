@@ -2,6 +2,7 @@ import SectionWrapper from "@/app/utils/SectionWrapper";
 import TableFooter from "../TableFooter/TableFooter";
 import Status from "@/app/utils/Status";
 import { StatusType } from "@/types";
+import PrimaryButton from "@/app/utils/PrimaryButton";
 
 export default function TripTable() {
   const columns = [
@@ -144,7 +145,12 @@ export default function TripTable() {
   return (
     <SectionWrapper>
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
-        <h3 className="text-fs-16 font-bold py-[12px] px-[20px]">Trip List</h3>
+        <div className="flex items-center justify-between px-[20px]">
+          <h3 className="text-fs-16 font-bold py-[12px]">
+            Trip List
+          </h3>
+          <PrimaryButton text="Add trip" className="max-w-[96px]" />
+        </div>
         <table className="min-w-full table-auto text-fs-12">
           <thead className="bg-[#F8F8F8] ">
             <tr className="text-left h-[44px] flex items-center gap-4">
