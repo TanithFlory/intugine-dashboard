@@ -146,10 +146,17 @@ export default function TripTable() {
     <SectionWrapper>
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
         <div className="flex items-center justify-between px-[20px]">
-          <h3 className="text-fs-16 font-bold py-[12px]">
-            Trip List
-          </h3>
-          <PrimaryButton text="Add trip" className="max-w-[96px]" />
+          <h3 className="text-fs-16 font-bold py-[12px]">Trip List</h3>
+          <div className="flex items-center gap-[17px] w-[210px]">
+            <PrimaryButton
+              text="Update status"
+              className="max-w-[96px] bg-white border-[1px] border-buttonColor text-buttonColor"
+            />
+            <PrimaryButton
+              text="Add trip"
+              className="max-w-[96px] bg-buttonColor"
+            />
+          </div>
         </div>
         <table className="min-w-full table-auto text-fs-12">
           <thead className="bg-[#F8F8F8] ">
