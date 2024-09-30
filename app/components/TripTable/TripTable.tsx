@@ -1,5 +1,7 @@
 import SectionWrapper from "@/app/utils/SectionWrapper";
 import TableFooter from "../TableFooter/TableFooter";
+import Status from "@/app/utils/Status";
+import { StatusType } from "@/types";
 
 export default function TripTable() {
   const columns = [
@@ -16,6 +18,116 @@ export default function TripTable() {
   ];
 
   const rows = [
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "On Time",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "On Time",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "On Time",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Delayed",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Delayed",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Delayed",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Other",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Other",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "Other",
+    },
+    {
+      tripId: "12345",
+      transporter: "BlueDart",
+      source: "New York",
+      destination: "Los Angeles",
+      phone: "9902713573",
+      eta: "12:00 PM",
+      distanceRemaining: "300 miles",
+      tripStatus: "In Progress",
+      tatStatus: "On Time",
+    },
     {
       tripId: "12345",
       transporter: "BlueDart",
@@ -56,28 +168,45 @@ export default function TripTable() {
             </tr>
           </thead>
           <tbody className="gap-4">
-            {rows.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="border-t h-[44px] flex gap-4 items-center"
-              >
-                <td className="w-[50px] flex items-center justify-center">
-                  <input
-                    type="checkbox"
-                    className="w-[16px] accent-black h-[16px]"
-                  />
-                </td>
-                <td className="w-[112px]">{row.tripId}</td>
-                <td className="w-[100px]">{row.transporter}</td>
-                <td className="w-[128px]">{row.source}</td>
-                <td className="w-[128px]">{row.destination}</td>
-                <td className="w-[80px]">{row.phone}</td>
-                <td className="w-[112px]">{row.eta}</td>
-                <td className="w-[120px]">{row.distanceRemaining}</td>
-                <td className="w-[118px]">{row.tripStatus}</td>
-                <td className="w-[104px]">{row.tatStatus}</td>
-              </tr>
-            ))}
+            {rows.map((row, rowIndex) => {
+              const {
+                tripId,
+                transporter,
+                source,
+                destination,
+                phone,
+                eta,
+                distanceRemaining,
+                tripStatus,
+                tatStatus,
+              } = row;
+              return (
+                <tr
+                  key={rowIndex}
+                  className="border-t h-[44px] flex gap-4 items-center"
+                >
+                  <td className="w-[50px] flex items-center justify-center">
+                    <input
+                      type="checkbox"
+                      className="w-[16px] accent-black h-[16px]"
+                    />
+                  </td>
+                  <td className="w-[112px]">{tripId}</td>
+                  <td className="w-[100px]">{transporter}</td>
+                  <td className="w-[128px]">{source}</td>
+                  <td className="w-[128px]">{destination}</td>
+                  <td className="w-[80px]">{phone}</td>
+                  <td className="w-[112px]">{eta}</td>
+                  <td className="w-[120px]">{distanceRemaining}</td>
+                  <td className="w-[118px]">
+                    <Status status={tripStatus as StatusType} />
+                  </td>
+                  <td className="w-[104px]">
+                    <Status status={tatStatus as StatusType} />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
           <TableFooter />
         </table>
