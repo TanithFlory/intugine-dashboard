@@ -14,9 +14,9 @@
   /* Status colors */
   --trip-status: #d7e3fe;
   --trip-status-text: #24428a;
-  --delayed: #ffeeee;
+  --delayed: #F9D7D7;
   --delayed-text: #cc3333;
-  --on-time: #d7e3fe;
+  --on-time: #B8EDDE;
   --on-time-text: #008f66;
   --progress: #00c28b;
   --other-status: #ffecdb;
