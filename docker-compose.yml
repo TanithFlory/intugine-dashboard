@@ -1,0 +1,17 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=ep-gentle-sky-a17t80uz.ap-southeast-1.aws.neon.tech:5432/intugine?sslmode=require
+      - KC_DB_USERNAME=intugine_owner
+      - KC_DB_PASSWORD=HxB3v4mypGNV
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - JDBC_PARAMS=sslmode=require
+      - KC_HTTP_ENABLED=true
+      - KC_PROXY=edge
+    ports:
+      - 8080:8080
+    command:
+      - start-dev
