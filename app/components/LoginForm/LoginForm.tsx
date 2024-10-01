@@ -1,6 +1,6 @@
 import Image from "next/image";
-import TextInput from "../utils/TextInput";
-import { images } from "../constants/constants";
+import TextInput from "@/app/utils/TextInput";
+import { images } from "@/app/constants/constants";
 
 export default function LoginForm() {
   return (

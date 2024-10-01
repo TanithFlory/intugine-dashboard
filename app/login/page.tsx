@@ -1,6 +1,6 @@
 import { images } from "../constants/constants";
 import Image from "next/image";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/LoginForm/LoginForm";
 
 export default function Page() {
   return (
