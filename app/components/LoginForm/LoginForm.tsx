@@ -1,38 +1,84 @@
-import Image from "next/image";
+"use client";
 import TextInput from "@/app/utils/TextInput";
-import { images } from "@/app/constants/constants";
+import { ChangeEvent, useState } from "react";
 
 export default function LoginForm() {
-  return (
-    <div className="max-w-[320px] px-2">
-      <div className="flex items-center gap-2 mb-2 ">
-        <div>
-          <Image src={images.logo} alt="logo" className="h-[50px] w-[50px]"/>
-        </div>
-        <h3 className="text-fs-20 text-[#334F97] font-bold">
-          Intugine Technologies
-        </h3>
-      </div>
-      <p className="text-fs-12 mb-2 ml-1">Logistics Through Innovation</p>
-      <div className="text-fs-12 rounded-[4px] text-buttonColor bg-[#F3F1F3] w-[60px] text-center h-[30px] flex items-center justify-center mb-8">
-        Intracity
-      </div>
+  const [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
 
-      <form className="w-[320px]">
+  function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+    const target = e.target;
+
+    setLoginDetails((prev) => ({ ...prev, [target.name]: target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const { username, password } = loginDetails;
+    try {
+      const response = await fetch(
+        `http://localhost:8080/realms/intugine/protocol/openid-connect/token`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            client_id: "2bCqZI7f8Z48as3RzLttBqZcRHJTrkYc",
+            username,
+            password,
+            grant_type: "password",
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return setError(data.error_description);
+      }
+
+      localStorage.setItem("accessToken", data.access_token);
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return (
+    <form className="w-[320px]" onSubmit={handleSubmit}>
+      <div className="mb-4">
         <div className="mb-4">
           <label className="text-fs-12 font-bold mb-2">Username</label>
-          <TextInput placeholder="username" required type="text" />
+          <TextInput
+            placeholder="username"
+            required
+            type="text"
+            name="username"
+            onChange={onChangeHandler}
+          />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="text-fs-12 font-bold mb-2">Password</label>
-          <TextInput placeholder="password" required type="password" />
+          <TextInput
+            placeholder="password"
+            required
+            type="password"
+            name="password"
+            onChange={onChangeHandler}
+          />
         </div>
-        <div className="text-fs-12 text-buttonColor mb-4">Forgot Password?</div>
+        {error ? (
+          <div className="text-fs-12 text-red-500 mb-2">{error}</div>
+        ) : null}
+      </div>
 
-        <button className="w-[280px] bg-buttonColor rounded-[4px] text-fs-12 text-white h-[35px]">
-          LOGIN
-        </button>
-      </form>
-    </div>
+      <div className="text-fs-12 text-buttonColor mb-4">Forgot Password?</div>
+
+      <button className="w-[280px] bg-buttonColor rounded-[4px] text-fs-12 text-white h-[35px]">
+        LOGIN
+      </button>
+    </form>
   );
 }

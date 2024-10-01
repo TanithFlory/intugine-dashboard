@@ -1,6 +1,7 @@
 import { images } from "../constants/constants";
 import Image from "next/image";
 import LoginForm from "../components/LoginForm/LoginForm";
+import LoginBranding from "../components/LoginBranding/LoginBranding";
 
 export default function Page() {
   return (
@@ -12,7 +13,8 @@ export default function Page() {
       </div>
 
       <div className="bg-white flex items-center justify-center grow basis-[30%] max-lg:basis-full">
-        <div>
+        <div className="max-w-[320px] px-2 overflow-x-hidden">
+          <LoginBranding />
           <LoginForm />
         </div>
       </div>
