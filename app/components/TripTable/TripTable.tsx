@@ -22,8 +22,8 @@ export default async function TripTable({
   const json = await res.json();
   const { trips, totalCount } = json.data || { trips: [], totalCount: 0 };
   return (
-    <SectionWrapper>
-      <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
+    <SectionWrapper className="border-borderColor border-[1px] rounded-[8px]">
+      <div className="overflow-y-scroll overflow-x-auto max-h-[600px] ">
         <div className="flex items-center justify-between px-[20px]">
           <h3 className="text-fs-16 font-bold py-[12px]">Trip List</h3>
           <TripControls />
@@ -102,13 +102,13 @@ export default async function TripTable({
               );
             })}
           </tbody>
-          <TableFooter
-            totalCount={totalCount}
-            currentPage={Number(page)}
-            resultsPerPage={Number(resultsPerPage)}
-          />
         </table>
       </div>
+      <TableFooter
+        totalCount={totalCount}
+        currentPage={Number(page)}
+        resultsPerPage={Number(resultsPerPage)}
+      />
     </SectionWrapper>
   );
 }
