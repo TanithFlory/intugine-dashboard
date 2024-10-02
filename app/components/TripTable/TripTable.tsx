@@ -1,20 +1,26 @@
 import SectionWrapper from "@/app/utils/SectionWrapper";
 import TableFooter from "../TableFooter/TableFooter";
 import Status from "@/app/utils/Status";
-import { StatusType, Trip } from "@/types";
+import { SearchParams, StatusType, Trip } from "@/types";
 import TripControls from "./TripControls";
 import { calculateTATStatus } from "@/app/utility-functions/getTatStatus";
 import tripColumns from "./tripColumns";
 
-export default async function TripTable() {
-  const res = await fetch("http://localhost:3000/api/trips/get-trips", {
-    method: "GET",
-  });
-
+export default async function TripTable({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { page = 1, resultsPerPage = 10 } = searchParams || {};
+  const res = await fetch(
+    `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
+  );
   const json = await res.json();
-
-  const trips = json.data?.trips || [];
-
+  const { trips, totalCount } = json.data || { trips: [], totalCount: 0 };
   return (
     <SectionWrapper>
       <div className="overflow-x-auto border-borderColor border-[1px] rounded-[8px]">
@@ -96,7 +102,11 @@ export default async function TripTable() {
               );
             })}
           </tbody>
-          <TableFooter />
+          <TableFooter
+            totalCount={totalCount}
+            currentPage={Number(page)}
+            resultsPerPage={Number(resultsPerPage)}
+          />
         </table>
       </div>
     </SectionWrapper>

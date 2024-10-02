@@ -5,6 +5,8 @@ export interface Wrapper extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
+export type SearchParams = { [key: string]: string | string[] | undefined };
+
 export type StatusType = "On Time" | "Delayed" | "Other";
 
 export type CloseModalType = React.MouseEvent<HTMLDivElement>;
@@ -13,9 +15,9 @@ export type Trip = {
   _id: string;
   tripId: string;
   transporter: string;
-  tripStartTime: string; 
+  tripStartTime: string;
   currentStatusCode: string;
-  currentStatus: string; 
+  currentStatus: string;
   phoneNumber: number;
   etaDays: number;
   distanceRemaining: number;
@@ -26,6 +28,12 @@ export type Trip = {
   dest: string;
   destLatitude: number;
   destLongitude: number;
-  lastPingTime: string; 
+  lastPingTime: string;
   createdAt: string;
+};
+
+export type PaginationStats = {
+  totalCount: number;
+  resultsPerPage: number;
+  currentPage: number;
 };

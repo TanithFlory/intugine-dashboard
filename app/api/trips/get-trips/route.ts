@@ -8,13 +8,15 @@ export async function GET(req: NextRequest, _res: NextResponse) {
     const page = Number(searchParams.get("page")) || 1;
     const resultsPerPage = Number(searchParams.get("resultsPerPage")) | 10;
 
+    const totalCount = await prisma.trip.count();
+
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
     });
 
     return NextResponse.json(
-      { data: { trips: JSONParseBigInt(trips) } },
+      { data: { trips: JSONParseBigInt(trips), totalCount } },
       { status: 200 }
     );
   } catch (err) {
@@ -32,7 +34,7 @@ function JSONParseBigInt(obj: any) {
   return JSON.parse(
     JSON.stringify(
       obj,
-      (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+      (_key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
     )
   );
 }

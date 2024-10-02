@@ -1,22 +1,29 @@
-"use client";
 import PaginationArrows from "@/app/utils/PaginationArrows";
-import { useState } from "react";
+import { PaginationStats } from "@/types";
+import Link from "next/link";
+import { generatePaginationItems } from "./generatePagination";
 
-export default function Pagination() {
-  const [currentPage, setCurrentPage] = useState(1);
+export default function Pagination({
+  currentPage,
+  resultsPerPage,
+  totalCount,
+}: PaginationStats) {
+  console.log(totalCount,resultsPerPage);
+  const paginationItems = generatePaginationItems(totalCount, resultsPerPage);
   return (
     <div className="flex items-center text-black">
       <PaginationArrows />
-      {[1, 2, 3, 4, 5, "...", 20].map((item, index) => {
+      {paginationItems.map((item, index) => {
         return (
-          <div
+          <Link
             className={`h-[24px] w-[24px] rounded-[4px] flex items-center justify-center ${
-              currentPage === index ? "bg-buttonColor text-white" : ""
+              currentPage === index + 1 ? "bg-buttonColor text-white" : ""
             }`}
             key={index}
+            href={`/?page=${item}&resultsPerPage=${resultsPerPage}`}
           >
             {item}
-          </div>
+          </Link>
         );
       })}
       <PaginationArrows className="rotate-180 mr-4" />
