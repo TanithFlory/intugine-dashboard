@@ -12,6 +12,7 @@ enum Status {
   In_Transit
   Reached_Destination
   Delivered
+  Delayed
 }
 
 enum StatusCode {

@@ -8,8 +8,10 @@ import tripColumns from "./tripColumns";
 
 export default async function TripTable({
   searchParams,
+  totalCount,
 }: {
   searchParams: SearchParams;
+  totalCount: number;
 }) {
   const { page = 1, resultsPerPage = 10 } = searchParams || {};
   const res = await fetch(
@@ -20,10 +22,10 @@ export default async function TripTable({
     }
   );
   const json = await res.json();
-  const { trips, totalCount } = json.data || { trips: [], totalCount: 0 };
+  const trips = json.data.trips || [];
   return (
     <SectionWrapper className="border-borderColor border-[1px] rounded-[8px]">
-      <div className="overflow-y-scroll overflow-x-auto max-h-[600px] ">
+      <div className="overflow-y-scroll overflow-x-auto max-h-[500px] ">
         <div className="flex items-center justify-between px-[20px]">
           <h3 className="text-fs-16 font-bold py-[12px]">Trip List</h3>
           <TripControls />

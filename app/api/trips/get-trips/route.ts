@@ -8,15 +8,17 @@ export async function GET(req: NextRequest, _res: NextResponse) {
     const page = Number(searchParams.get("page")) || 1;
     const resultsPerPage = Number(searchParams.get("resultsPerPage")) | 10;
 
-    const totalCount = await prisma.trip.count();
-
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
     });
 
     return NextResponse.json(
-      { data: { trips: JSONParseBigInt(trips), totalCount } },
+      {
+        data: {
+          trips: JSONParseBigInt(trips),
+        },
+      },
       { status: 200 }
     );
   } catch (err) {
