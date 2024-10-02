@@ -11,7 +11,7 @@ export default function Status({ status }: IProps) {
         typeClasses[status] || "bg-tripStatus text-tripStatusText"
       }`}
     >
-      {status}
+      {status.replace("_", " ")}
     </div>
   );
 }

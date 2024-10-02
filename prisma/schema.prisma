@@ -1,0 +1,43 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("NEON_DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Status {
+  Booked
+  In_Transit
+  Reached_Destination
+  Delivered
+}
+
+enum StatusCode {
+  RD
+  IT
+  D
+  B
+}
+
+model Trip {
+  id                String     @unique @map("_id")
+  tripId            String     @unique
+  transporter       String
+  tripStartTime     DateTime
+  currentStatus     Status
+  currentStatusCode StatusCode
+  phoneNumber       BigInt
+  etaDays           Int
+  distanceRemaining Int
+  tripEndTime       DateTime?
+  source            String
+  sourceLatitude    Float
+  sourceLongitude   Float
+  dest              String
+  destLatitude      Float
+  destLongitude     Float
+  lastPingTime      DateTime
+  createdAt         DateTime   @default(now())
+}

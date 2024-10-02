@@ -1,146 +1,19 @@
 import SectionWrapper from "@/app/utils/SectionWrapper";
 import TableFooter from "../TableFooter/TableFooter";
 import Status from "@/app/utils/Status";
-import { StatusType } from "@/types";
+import { StatusType, Trip } from "@/types";
 import TripControls from "./TripControls";
+import { calculateTATStatus } from "@/app/utility-functions/getTatStatus";
+import tripColumns from "./tripColumns";
 
-export default function TripTable() {
-  const columns = [
-    { label: "", width: "w-[50px]" }, // Checkbox column
-    { label: "Trip ID", width: "w-[112px]" },
-    { label: "Transporter", width: "w-[100px]" },
-    { label: "Source", width: "w-[128px]" },
-    { label: "Destination", width: "w-[128px]" },
-    { label: "Phone", width: "w-[80px]" },
-    { label: "ETA", width: "w-[112px]" },
-    { label: "Distance Remaining", width: "w-[120px]" },
-    { label: "Trip Status", width: "w-[118px]" },
-    { label: "TAT Status", width: "w-[104px]" },
-  ];
+export default async function TripTable() {
+  const res = await fetch("http://localhost:3000/api/trips/get-trips", {
+    method: "GET",
+  });
 
-  const rows = [
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "On Time",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "On Time",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "On Time",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Delayed",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Delayed",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Delayed",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Other",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Other",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "Other",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "On Time",
-    },
-    {
-      tripId: "12345",
-      transporter: "BlueDart",
-      source: "New York",
-      destination: "Los Angeles",
-      phone: "9902713573",
-      eta: "12:00 PM",
-      distanceRemaining: "300 miles",
-      tripStatus: "In Progress",
-      tatStatus: "On Time",
-    },
-  ];
+  const json = await res.json();
+
+  const trips = json.data?.trips || [];
 
   return (
     <SectionWrapper>
@@ -152,7 +25,7 @@ export default function TripTable() {
         <table className="min-w-full table-auto text-fs-12">
           <thead className="bg-[#F8F8F8] ">
             <tr className="text-left h-[44px] flex items-center gap-4">
-              {columns.map((column, index) => (
+              {tripColumns.map((column, index) => (
                 <th
                   key={index}
                   className={`box-border ${column.width} ${
@@ -162,7 +35,7 @@ export default function TripTable() {
                   {index === 0 ? (
                     <input
                       type="checkbox"
-                      className="w-[16px]  bg-[#FFFFFF] h-[16px]"
+                      className="w-[16px] bg-[#FFFFFF] h-[16px]"
                     />
                   ) : (
                     column.label
@@ -172,18 +45,20 @@ export default function TripTable() {
             </tr>
           </thead>
           <tbody className="gap-4 font-sans">
-            {rows.map((row, rowIndex) => {
+            {trips.map((trip: Trip, rowIndex: number) => {
               const {
                 tripId,
                 transporter,
                 source,
-                destination,
-                phone,
-                eta,
+                dest,
+                phoneNumber,
+                etaDays,
                 distanceRemaining,
-                tripStatus,
-                tatStatus,
-              } = row;
+                currentStatus,
+                tripEndTime,
+                lastPingTime,
+                tripStartTime,
+              } = trip;
               return (
                 <tr
                   key={rowIndex}
@@ -198,15 +73,24 @@ export default function TripTable() {
                   <td className="w-[112px]">{tripId}</td>
                   <td className="w-[100px]">{transporter}</td>
                   <td className="w-[128px]">{source}</td>
-                  <td className="w-[128px]">{destination}</td>
-                  <td className="w-[80px]">{phone}</td>
-                  <td className="w-[112px]">{eta}</td>
+                  <td className="w-[128px]">{dest}</td>
+                  <td className="w-[80px]">{phoneNumber}</td>
+                  <td className="w-[112px]">{etaDays}</td>
                   <td className="w-[120px]">{distanceRemaining}</td>
                   <td className="w-[118px]">
-                    <Status status={tripStatus as StatusType} />
+                    <Status status={currentStatus as StatusType} />
                   </td>
                   <td className="w-[104px]">
-                    <Status status={tatStatus as StatusType} />
+                    <Status
+                      status={
+                        calculateTATStatus(
+                          etaDays,
+                          tripEndTime,
+                          lastPingTime,
+                          tripStartTime
+                        ) as StatusType
+                      }
+                    />
                   </td>
                 </tr>
               );
