@@ -20,12 +20,12 @@ export default function LoginForm() {
     const { username, password } = loginDetails;
     try {
       const response = await fetch(
-        `http://localhost:8080/realms/intugine/protocol/openid-connect/token`,
+        `${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}protocol/openid-connect/token`,
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams({
-            client_id: "2bCqZI7f8Z48as3RzLttBqZcRHJTrkYc",
+            client_id: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID as string,
             username,
             password,
             grant_type: "password",
