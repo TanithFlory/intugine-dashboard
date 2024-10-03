@@ -35,8 +35,8 @@ export default function TableBody({ trips }: { trips: Trip[] }) {
             <td className="w-[128px]">{source}</td>
             <td className="w-[128px]">{dest}</td>
             <td className="w-[80px]">{phoneNumber}</td>
-            <td className="w-[112px]">{etaDays}</td>
-            <td className="w-[120px]">{distanceRemaining}</td>
+            <td className="w-[105px]">{etaDays}</td>
+            <td className="w-[136px]">{distanceRemaining}</td>
             <td className="w-[118px]">
               <Status status={currentStatus as StatusType} />
             </td>

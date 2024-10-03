@@ -5,10 +5,10 @@ const tripColumns = [
   { label: "Source", width: "w-[128px]", identifier: "source" },
   { label: "Destination", width: "w-[128px]", identifier: "dest" },
   { label: "Phone", width: "w-[80px]", identifier: "phoneNumber" },
-  { label: "ETA", width: "w-[112px]", identifier: "etaDays" },
+  { label: "ETA", width: "w-[105px]", identifier: "etaDays" },
   {
     label: "Distance Remaining",
-    width: "w-[120px]",
+    width: "w-[136px]",
     identifier: "distanceRemaining",
   },
   { label: "Trip Status", width: "w-[118px]", identifier: "currentStatus" },

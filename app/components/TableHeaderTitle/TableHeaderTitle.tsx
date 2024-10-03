@@ -17,7 +17,7 @@ export default function TableHeaderTitle({
 }: TableHeaderTitleProps) {
   return (
     <th
-      className={`box-border ${width} ${
+      className={`box-border text-fs-12 ${width} ${
         index === 0 ? "flex items-center justify-center" : ""
       }`}
       {...rest}
@@ -25,8 +25,8 @@ export default function TableHeaderTitle({
       {index === 0 ? (
         <input type="checkbox" className="w-[16px] bg-[#FFFFFF] h-[16px]" />
       ) : (
-        <div className="flex items-center">
-          {label}
+        <div className="flex items-center gap-1">
+          <div className="w-max">{label}</div>
           <Image height={15} width={15} alt="sort" src={images.ascending} />
         </div>
       )}
