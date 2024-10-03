@@ -4,7 +4,8 @@ import Status from "@/app/utils/Status";
 import { SearchParams, StatusType, Trip } from "@/types";
 import TripControls from "./TripControls";
 import { calculateTATStatus } from "@/app/utility-functions/getTatStatus";
-import tripColumns from "./tripColumns";
+import TableHeader from "../TableHeader/TableHeader";
+import { getTrips } from "@/app/services/tripService";
 
 export default async function TripTable({
   searchParams,
@@ -14,18 +15,7 @@ export default async function TripTable({
   totalCount: number;
 }) {
   const { page = 1, resultsPerPage = 10 } = searchParams || {};
-  let trips = [];
-  if (!isNaN(Number(page)) && !isNaN(Number(resultsPerPage))) {
-    const res = await fetch(
-      `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
-    const json = await res.json();
-    trips = json.data?.trips || [];
-  }
+  const trips = await getTrips(Number(page), Number(resultsPerPage));
 
   return (
     <SectionWrapper className="border-borderColor border-[1px] rounded-[8px]">
@@ -35,27 +25,7 @@ export default async function TripTable({
           <TripControls />
         </div>
         <table className="min-w-full table-auto text-fs-12">
-          <thead className="bg-[#F8F8F8] ">
-            <tr className="text-left h-[44px] flex items-center gap-4">
-              {tripColumns.map((column, index) => (
-                <th
-                  key={index}
-                  className={`box-border ${column.width} ${
-                    index === 0 ? "flex items-center justify-center" : ""
-                  }`}
-                >
-                  {index === 0 ? (
-                    <input
-                      type="checkbox"
-                      className="w-[16px] bg-[#FFFFFF] h-[16px]"
-                    />
-                  ) : (
-                    column.label
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
+          <TableHeader />
           <tbody className="gap-4 font-sans">
             {trips.map((trip: Trip, rowIndex: number) => {
               const {

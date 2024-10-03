@@ -1,8 +1,8 @@
+import { getDelayedStats } from "@/app/services/tripService";
 import ProgressCircle from "@/app/utils/ProgressCircle";
 import SectionWrapper from "@/app/utils/SectionWrapper";
 import StatisticsCard from "@/app/utils/StatisticsCard";
 import StatisticsWrapper from "@/app/utils/StatisticsWrapper";
-import { SearchParams } from "@/types";
 
 type Statistics = {
   totalCount: number;
@@ -15,18 +15,8 @@ export default async function Statistics({
   inTransitCount,
   deliveredCount,
 }: Statistics) {
-  /* cached since this retrieves all trips from db. */
-  async function getDelayedStats() {
-    const res = await fetch(
-      `${process.env.NEXT_BASE_URL}/api/trips/get-stats/delayed`,
-      {
-        method: "GET",
-        cache: "default",
-      }
-    );
-    const json = await res.json();
-    return json.data.delayedCount;
-  }
+  /* cached fn->getDelayedStats since this retrieves all trips from db. */
+
   return (
     <SectionWrapper>
       <div className="flex items-center gap-6 w-full">
