@@ -2,11 +2,33 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
+const validFilters = new Map<string, boolean>([
+  ["tripId", true],
+  ["transporter", true],
+  ["tripStartTime", true],
+  ["currentStatus", true],
+  ["currentStatusCode", true],
+  ["phoneNumber", true],
+  ["etaDays", true],
+  ["distanceRemaining", true],
+  ["tripEndTime", true],
+  ["source", true],
+  ["dest", true],
+  ["lastPingTime", true],
+  ["createdAt", true],
+]);
+
 export async function GET(req: NextRequest, _res: NextResponse) {
   try {
     const { searchParams } = new URL(req.url as string);
     const page = Number(searchParams.get("page"));
     const resultsPerPage = Number(searchParams.get("resultsPerPage"));
+    let filter = searchParams.get("filter");
+    const order = searchParams.get("order");
+
+    if (filter && !validFilters.has(filter)) {
+      filter = "currentStatus";
+    }
 
     if (isNaN(page) && isNaN(resultsPerPage))
       return NextResponse.json({ message: "Error" }, { status: 404 });
@@ -14,19 +36,13 @@ export async function GET(req: NextRequest, _res: NextResponse) {
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
+      orderBy: { [(filter as string) || "currentStatus"]: order || "asc" },
     });
-    const sortedTrips = trips.sort((a, b) => {
-      if (a.currentStatus === "Delivered" && b.currentStatus !== "Delivered")
-        return -1;
-      if (a.currentStatus !== "Delivered" && b.currentStatus === "Delivered")
-        return 1;
-      return 0;
-    });
-    
+
     return NextResponse.json(
       {
         data: {
-          trips: JSONParseBigInt(sortedTrips),
+          trips: JSONParseBigInt(trips),
         },
       },
       { status: 200 }

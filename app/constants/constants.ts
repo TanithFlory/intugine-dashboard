@@ -4,6 +4,7 @@ import arrowSingle from "../assets/arrowSingle.svg";
 import cross from "../assets/cross.svg";
 import loginBg from "../assets/login-bg.svg";
 import logo from "../assets/intugine.png";
+import ascending from "../assets/ascending.svg";
 
 export const images: Record<string, StaticImageData | string> = {
   arrows,
@@ -11,4 +12,5 @@ export const images: Record<string, StaticImageData | string> = {
   cross,
   loginBg,
   logo,
+  ascending,
 };

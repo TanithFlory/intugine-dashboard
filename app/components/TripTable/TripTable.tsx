@@ -14,8 +14,18 @@ export default async function TripTable({
   searchParams: SearchParams;
   totalCount: number;
 }) {
-  const { page = 1, resultsPerPage = 10 } = searchParams || {};
-  const trips = await getTrips(Number(page), Number(resultsPerPage));
+  const {
+    page = 1,
+    resultsPerPage = 10,
+    filter = "currentStatus",
+    order = "asc",
+  } = searchParams || {};
+  const trips = await getTrips(
+    Number(page),
+    Number(resultsPerPage),
+    filter as string,
+    order as string
+  );
 
   return (
     <SectionWrapper className="border-borderColor border-[1px] rounded-[8px]">
@@ -25,7 +35,11 @@ export default async function TripTable({
           <TripControls />
         </div>
         <table className="min-w-full table-auto text-fs-12">
-          <TableHeader />
+          <TableHeader
+            currentPage={Number(page)}
+            resultsPerPage={Number(resultsPerPage)}
+            order={order as string}
+          />
           <tbody className="gap-4 font-sans">
             {trips.map((trip: Trip, rowIndex: number) => {
               const {

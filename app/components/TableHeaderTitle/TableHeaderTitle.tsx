@@ -1,23 +1,34 @@
+import { ThHTMLAttributes } from "react";
+import { images } from "@/app/constants/constants";
+import Image from "next/image";
+interface TableHeaderTitleProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  width: string;
+  label: string;
+  index: number;
+  order: string;
+}
+
 export default function TableHeaderTitle({
   width,
   label,
   index,
-}: {
-  width: string;
-  label: string;
-  index: number;
-}) {
+  order,
+  ...rest
+}: TableHeaderTitleProps) {
   return (
     <th
-      key={index}
       className={`box-border ${width} ${
         index === 0 ? "flex items-center justify-center" : ""
       }`}
+      {...rest}
     >
       {index === 0 ? (
         <input type="checkbox" className="w-[16px] bg-[#FFFFFF] h-[16px]" />
       ) : (
-        label
+        <div className="flex items-center">
+          {label}
+          <Image height={15} width={15} alt="sort" src={images.ascending} />
+        </div>
       )}
     </th>
   );

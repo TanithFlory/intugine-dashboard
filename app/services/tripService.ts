@@ -23,13 +23,15 @@ export async function getDelayedStats(): Promise<number> {
 }
 
 export async function getTrips(
-  page: number = 1,
-  resultsPerPage: number = 10
+  page: number,
+  resultsPerPage: number,
+  filter: string,
+  order: string
 ): Promise<Trip[]> {
   try {
     if (!isNaN(Number(page)) && !isNaN(Number(resultsPerPage))) {
       const res = await fetch(
-        `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}`,
+        `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}&filter=${filter}&order=${order}`,
         {
           method: "GET",
           cache: "no-store",
