@@ -19,12 +19,17 @@ export async function POST(req: NextRequest) {
       }
     );
     const json = await response.json();
+
+    if (json?.error) {
+      return NextResponse.json({ message: "Invalid credentials" });
+    }
+
     cookies().set("accessToken", json.access_token, {
       path: "/",
       httpOnly: true,
     });
 
-    return NextResponse.json({ accessToken: "abc" });
+    return NextResponse.json({ message: "Successful" });
   } catch (error) {
     console.log(error);
   }

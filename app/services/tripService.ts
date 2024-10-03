@@ -2,18 +2,16 @@
 
 import { Trip } from "@/types";
 import { cookies } from "next/headers";
+import { getAccessToken } from "../utility-functions/getAccessToken";
 
 export async function getDelayedStats(): Promise<number> {
-  const cookieStore = cookies();
-
-  const accessToken = cookieStore.get("accessToken")?.value;
-
+  const accessToken = getAccessToken();
   try {
     const res = await fetch(
       `${process.env.NEXT_BASE_URL}/api/trips/get-stats/delayed`,
       {
         method: "GET",
-        cache: "no-cache",
+        cache: "no-store",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
@@ -38,9 +36,7 @@ export async function getTrips(
   order: string
 ): Promise<Trip[]> {
   try {
-    const cookieStore = cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
+    const accessToken = getAccessToken();
     if (!isNaN(Number(page)) && !isNaN(Number(resultsPerPage))) {
       const res = await fetch(
         `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}&filter=${filter}&order=${order}`,

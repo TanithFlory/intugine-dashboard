@@ -42,7 +42,6 @@ export default function LoginForm() {
       setCookie("accessToken", data.access_token, {
         maxAge: 60 * 6 * 24,
       });
-
       window.location.href = process.env.NEXT_PUBLIC_BASE_URL as string;
     } catch (error) {
       console.log(error);
