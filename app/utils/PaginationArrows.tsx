@@ -8,30 +8,28 @@ export default function PaginationArrows({
   resultsPerPage,
   type,
   paginationItems,
-  isSingleArrow,
 }: {
   className?: string;
   currentPage: number;
   resultsPerPage: number;
   paginationItems?: (string | number)[];
   type: "decrement" | "increment";
-  isSingleArrow?: boolean;
 }) {
-  function getHref() {
-    const incrementValue = isSingleArrow ? 1 : 5; // Determine increment value based on the arrow type
+  function getHref(isSingleArrow: string) {
+    const incrementValue = isSingleArrow === "arrowSingle" ? 1 : 5; // Determine increment value based on the arrow type
 
     if (type === "decrement") {
       return `/?page=${
-        currentPage > 1 ? currentPage - incrementValue : currentPage
+        currentPage - incrementValue >= 0 ? currentPage - incrementValue : 1
       }&resultsPerPage=${resultsPerPage}`;
     }
 
     if (type === "increment" && paginationItems) {
       const lastPage = paginationItems[paginationItems.length - 1];
       return `/?page=${
-        currentPage < (lastPage as number)
+        currentPage + incrementValue <= (lastPage as number)
           ? currentPage + incrementValue
-          : currentPage
+          : lastPage
       }&resultsPerPage=${resultsPerPage}`;
     }
 
@@ -39,10 +37,14 @@ export default function PaginationArrows({
   }
 
   return (
-    <Link className={`${className || ""} flex items-center`} href={getHref()}>
+    <div className={`${className || ""} flex items-center`}>
       {["arrows", "arrowSingle"].map((item, index) => {
         return (
-          <div className="flex items-center h-[24px] w-[24px]" key={index}>
+          <Link
+            className="flex items-center h-[24px] w-[24px]"
+            key={index}
+            href={getHref(item)}
+          >
             <Image
               className="h-[12px] w-[12px]"
               src={images[item]}
@@ -50,9 +52,9 @@ export default function PaginationArrows({
               height={9}
               alt="Arrow"
             />
-          </div>
+          </Link>
         );
       })}
-    </Link>
+    </div>
   );
 }

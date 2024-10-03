@@ -1,20 +1,32 @@
-export function generatePaginationItems(totalCount: number, resultsPerPage: number) {
+export function generatePaginationItems(
+  currentPage: number,
+  totalCount: number,
+  resultsPerPage: number
+) {
   const totalPages = Math.ceil(totalCount / resultsPerPage);
-  const items = [];
+  const paginationItems = [];
+  const maxVisiblePages = 3;
 
-  for (let i = 1; i <= 4; i++) {
-    if (i <= totalPages) {
-      items.push(i);
-    }
+  paginationItems.push(1);
+
+  if (currentPage > maxVisiblePages + 1) {
+    paginationItems.push("...");
   }
 
-  if (totalPages > 5) {
-    items.push("...");
+  const startPage = Math.max(2, currentPage - maxVisiblePages);
+  const endPage = Math.min(totalPages - 1, currentPage + maxVisiblePages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    paginationItems.push(i);
   }
 
-  if (totalPages > 4) {
-    items.push(totalPages);
+  if (endPage < totalPages - 1) {
+    paginationItems.push("...");
   }
 
-  return items;
+  if (totalPages > 1) {
+    paginationItems.push(totalPages);
+  }
+
+  return paginationItems;
 }

@@ -8,19 +8,32 @@ export default function Pagination({
   resultsPerPage,
   totalCount,
 }: PaginationStats) {
-  const paginationItems = generatePaginationItems(totalCount, resultsPerPage);
+  const paginationItems = generatePaginationItems(
+    currentPage,
+    totalCount,
+    resultsPerPage
+  );
   return (
-    <div className="flex items-center text-black">
+    <div className="flex items-center text-black font-sans">
       <PaginationArrows
         resultsPerPage={resultsPerPage}
         currentPage={currentPage}
         type="decrement"
       />
       {paginationItems.map((item, index) => {
+        const styles =
+          "h-[24px] w-[24px] rounded-[4px] flex items-center justify-center ";
+        if (item === "...")
+          return (
+            <div className={`${styles} cursor-default`} key={index}>
+              {item}
+            </div>
+          );
+
         return (
           <Link
-            className={`h-[24px] w-[24px] rounded-[4px] flex items-center justify-center ${
-              currentPage === index + 1 ? "bg-buttonColor text-white" : ""
+            className={`${styles} ${
+              currentPage === Number(item) ? "bg-buttonColor text-white" : ""
             }`}
             key={index}
             href={`/?page=${item}&resultsPerPage=${resultsPerPage}`}
