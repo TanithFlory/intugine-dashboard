@@ -1,12 +1,6 @@
 import { AddTripForm } from "@/types";
-const transporters = [
-  "Bluedart",
-  "DHL",
-  "Delivery",
-  "DTDC",
-  "Gati",
-  "Safexpress",
-];
+import transporters from "@/app/constants/transporters";
+
 export function validateForm(formData: AddTripForm) {
   const errors: { [key: string]: string } = {};
   const { tripId, transporter, source, dest, phoneNumber } = formData;
