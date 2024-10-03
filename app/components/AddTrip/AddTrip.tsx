@@ -5,6 +5,7 @@ import InputFields from "./InputFields";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { validateForm } from "./validationForm";
 import { useApiCall } from "@/app/custom-hooks/useApiCall";
+import clearCachesByServerAction from "@/app/utility-functions/revalidate";
 
 export default function AddTrip({
   handleCloseModal,
@@ -31,6 +32,7 @@ export default function AddTrip({
     if (JSON.stringify(errors).length === 0) return;
 
     await sendRequest("/api/trips/add-trip", "POST", formData);
+    clearCachesByServerAction("/");
   }
 
   function onChangeHandler(
