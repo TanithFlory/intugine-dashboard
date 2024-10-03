@@ -1,28 +1,38 @@
 "use client";
-import { Transporter } from "@/types";
-import { ChangeEvent, useState } from "react";
+import { Transporter, TripStatus } from "@/types";
+import { useState } from "react";
 
 interface DropdownProps {
   options: string[];
   className?: string;
-  setTransporter: (transporter: Transporter) => void;
+  setTransporter?: (option: Transporter) => void;
+  setTripStatus?: (option: TripStatus) => void;
+  isTransport?: boolean;
   value: string;
 }
 
-function Dropdown({ options, className, setTransporter }: DropdownProps) {
+function SelectInput({
+  options,
+  className,
+  setTripStatus,
+  setTransporter,
+  isTransport,
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownValue, setDropDownValue] = useState<
-    Transporter | "Select Transporter"
-  >("Select Transporter");
+    Transporter | TripStatus
+  >();
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
   }
 
-  function dropDownHandler(option: Transporter) {
+  function dropDownHandler(option: Transporter | TripStatus) {
     setDropDownValue(option);
+    isTransport
+      ? setTransporter && setTransporter(option as Transporter)
+      : setTripStatus && setTripStatus(option as TripStatus);
     toggleDropdown();
-    setTransporter(option);
   }
 
   return (
@@ -51,4 +61,4 @@ function Dropdown({ options, className, setTransporter }: DropdownProps) {
   );
 }
 
-export default Dropdown;
+export default SelectInput;
