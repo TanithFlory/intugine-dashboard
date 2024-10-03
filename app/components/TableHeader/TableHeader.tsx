@@ -14,8 +14,8 @@ export default function TableHeader({
   order,
 }: TableHeader) {
   return (
-    <thead className="bg-[#F8F8F8] ">
-      <tr className="text-left h-[44px] flex items-center gap-4">
+    <div className="bg-[#F8F8F8] ">
+      <div className="text-left h-[44px] flex items-center gap-4">
         {tripColumns.map((column, index) => (
           <Link
             key={index}
@@ -32,7 +32,7 @@ export default function TableHeader({
             />
           </Link>
         ))}
-      </tr>
-    </thead>
+      </div>
+    </div>
   );
 }
