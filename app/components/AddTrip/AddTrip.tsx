@@ -23,6 +23,7 @@ export default function AddTrip({
   const { sendRequest, loading, apiError, response } = useApiCall();
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrors(validateForm(formData));
     await sendRequest("/api/trips/add-trip", "POST", formData);
   }
 
