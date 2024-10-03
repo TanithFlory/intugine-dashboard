@@ -2,9 +2,9 @@ import { StatusType } from "@/types";
 
 export function calculateTATStatus(
   etaDays: number,
-  tripEndTime: string | null,
-  lastPingTime: string | null,
-  tripStartTime: string
+  tripEndTime: string | null | Date,
+  lastPingTime: string | null | Date,
+  tripStartTime: string | Date
 ): StatusType {
   if (etaDays <= 0) {
     return "Other";

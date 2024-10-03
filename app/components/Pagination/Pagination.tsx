@@ -8,11 +8,14 @@ export default function Pagination({
   resultsPerPage,
   totalCount,
 }: PaginationStats) {
-  console.log(totalCount,resultsPerPage);
   const paginationItems = generatePaginationItems(totalCount, resultsPerPage);
   return (
     <div className="flex items-center text-black">
-      <PaginationArrows />
+      <PaginationArrows
+        resultsPerPage={resultsPerPage}
+        currentPage={currentPage}
+        type="decrement"
+      />
       {paginationItems.map((item, index) => {
         return (
           <Link
@@ -26,7 +29,13 @@ export default function Pagination({
           </Link>
         );
       })}
-      <PaginationArrows className="rotate-180 mr-4" />
+      <PaginationArrows
+        className="rotate-180 mr-4"
+        resultsPerPage={resultsPerPage}
+        currentPage={currentPage}
+        type="increment"
+        paginationItems={paginationItems}
+      />
     </div>
   );
 }

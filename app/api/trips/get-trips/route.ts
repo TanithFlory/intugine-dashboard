@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
@@ -15,11 +15,18 @@ export async function GET(req: NextRequest, _res: NextResponse) {
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
     });
-
+    const sortedTrips = trips.sort((a, b) => {
+      if (a.currentStatus === "Delivered" && b.currentStatus !== "Delivered")
+        return -1;
+      if (a.currentStatus !== "Delivered" && b.currentStatus === "Delivered")
+        return 1;
+      return 0;
+    });
+    
     return NextResponse.json(
       {
         data: {
-          trips: JSONParseBigInt(trips),
+          trips: JSONParseBigInt(sortedTrips),
         },
       },
       { status: 200 }
