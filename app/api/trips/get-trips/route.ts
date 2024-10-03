@@ -6,8 +6,7 @@ export async function GET(req: NextRequest, _res: NextResponse) {
   try {
     const { searchParams } = new URL(req.url as string);
     const page = Number(searchParams.get("page")) || 1;
-    const resultsPerPage = Number(searchParams.get("resultsPerPage")) | 10;
-
+    const resultsPerPage = Number(searchParams.get("resultsPerPage")?.trim()) || 10;
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
