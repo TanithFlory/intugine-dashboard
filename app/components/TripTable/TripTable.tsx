@@ -14,15 +14,19 @@ export default async function TripTable({
   totalCount: number;
 }) {
   const { page = 1, resultsPerPage = 10 } = searchParams || {};
-  const res = await fetch(
-    `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}`,
-    {
-      method: "GET",
-      cache: "no-store",
-    }
-  );
-  const json = await res.json();
-  const trips = json.data.trips || [];
+  let trips = [];
+  if (!isNaN(Number(page)) && !isNaN(Number(resultsPerPage))) {
+    const res = await fetch(
+      `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+    const json = await res.json();
+    trips = json.data?.trips || [];
+  }
+
   return (
     <SectionWrapper className="border-borderColor border-[1px] rounded-[8px]">
       <div className="overflow-y-scroll overflow-x-auto max-h-[500px] ">

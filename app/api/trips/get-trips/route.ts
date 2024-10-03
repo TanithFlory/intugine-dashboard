@@ -5,8 +5,12 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest, _res: NextResponse) {
   try {
     const { searchParams } = new URL(req.url as string);
-    const page = Number(searchParams.get("page")) || 1;
-    const resultsPerPage = Number(searchParams.get("resultsPerPage")?.trim()) || 10;
+    const page = Number(searchParams.get("page"));
+    const resultsPerPage = Number(searchParams.get("resultsPerPage"));
+
+    if (isNaN(page) && isNaN(resultsPerPage))
+      return NextResponse.json({ message: "Error" }, { status: 404 });
+
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
       skip: (page - 1) * resultsPerPage,
