@@ -9,9 +9,11 @@ import { validateForm } from "./validationForm";
 export default function UpdateStatus({
   handleCloseModal,
   closeModal,
+  selectedTripIds,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
   closeModal: (e: React.MouseEvent<any>) => void;
+  selectedTripIds: string[];
 }) {
   const [formData, setFormData] = useState({
     tripStatus: "Update Status" as TripStatus,
@@ -44,7 +46,10 @@ export default function UpdateStatus({
     const errors = validateForm(formData);
     setErrors(errors);
     if (JSON.stringify(errors).length === 0) return;
-    await sendRequest("/api/trips/update-trip", "POST", formData);
+    await sendRequest("/api/trips/update-trip", "POST", {
+      ...formData,
+      tripIds: selectedTripIds,
+    });
   }
 
   return (

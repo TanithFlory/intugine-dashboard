@@ -42,7 +42,7 @@ export async function getTrips(
         `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}&filter=${filter}&order=${order}`,
         {
           method: "GET",
-          cache: "no-store",
+          cache: "no-cache",
           headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",

@@ -1,9 +1,20 @@
-"use client"
+"use client";
+import { useTripContext } from "@/app/context/TripContext";
 import { calculateTATStatus } from "@/app/utility-functions/getTatStatus";
 import Status from "@/app/utils/Status";
 import { StatusType, Trip } from "@/types";
 
 export default function TableBody({ trips }: { trips: Trip[] }) {
+  const { setSelectedTripIds } = useTripContext();
+  function handleCheckboxChange(tripId: string) {
+    setSelectedTripIds((prevIds: string[]) => {
+      if (prevIds.includes(tripId)) {
+        return prevIds.filter((id) => id !== tripId);
+      } else {
+        return [...prevIds, tripId];
+      }
+    });
+  }
   return (
     <tbody className="gap-4 font-sans">
       {trips.map((trip: Trip, rowIndex: number) => {
@@ -29,6 +40,7 @@ export default function TableBody({ trips }: { trips: Trip[] }) {
               <input
                 type="checkbox"
                 className="w-[16px] accent-black h-[16px]"
+                onChange={() => handleCheckboxChange(tripId)}
               />
             </td>
             <td className="w-[112px]">{tripId}</td>

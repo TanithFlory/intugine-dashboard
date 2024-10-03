@@ -5,6 +5,7 @@ import PrimaryButton from "@/app/utils/PrimaryButton";
 import AddTrip from "../AddTrip/AddTrip";
 import { MouseEvent, useState } from "react";
 import UpdateStatus from "../UpdateStatus/UpdateStatus";
+import { useTripContext } from "@/app/context/TripContext";
 
 type ModalComponentMap = {
   addTrip: JSX.Element;
@@ -13,11 +14,19 @@ type ModalComponentMap = {
 
 export default function TripControls() {
   const { isModalOpen, openModal, closeModal, handleCloseModal } = useModal();
+  const { selectedTripIds } = useTripContext();
+  console.log(selectedTripIds)
   const components: ModalComponentMap = {
     addTrip: (
       <AddTrip handleCloseModal={handleCloseModal} closeModal={closeModal} />
     ),
-    updateStatus: <UpdateStatus handleCloseModal={handleCloseModal} closeModal={closeModal}/>,
+    updateStatus: (
+      <UpdateStatus
+        handleCloseModal={handleCloseModal}
+        closeModal={closeModal}
+        selectedTripIds={selectedTripIds}
+      />
+    ),
   };
   const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
     null
