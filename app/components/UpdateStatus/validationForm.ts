@@ -1,10 +1,14 @@
-import transporters from "@/app/constants/transporters";
+import tripStatuses from "@/app/constants/tripStatuses";
+import { TripStatus } from "@/types";
 
-export function validateForm(formData: { transporter: ""; dateTime: Date }) {
+export function validateForm(formData: {
+  tripStatus: TripStatus;
+  dateTime: string;
+}) {
   const errors: { [key: string]: string } = {};
-  const { transporter, dateTime } = formData;
+  const { tripStatus, dateTime } = formData;
 
-  const fieldEmpty = [dateTime, transporter].some(
+  const fieldEmpty = [dateTime, tripStatus].some(
     (field) => !field.toString().trim()
   );
 
@@ -12,16 +16,21 @@ export function validateForm(formData: { transporter: ""; dateTime: Date }) {
     errors.global = "All the fields are mandatory";
   }
 
-  if (!transporters.includes(transporter)) {
-    errors.transporter = "Please select a valid transporter";
+  if (!tripStatuses.includes(tripStatus)) {
+    errors.tripStatus = "Please select a valid status";
   }
 
-  if (dateTime && isNaN(dateTime.getTime())) {
+  const parsedDateTime = new Date(dateTime);
+
+  if (isNaN(parsedDateTime.getTime())) {
     errors.dateTime = "Invalid date and time provided";
   } else {
     const now = new Date();
-    if (dateTime < now) {
+
+    if (parsedDateTime.getTime() <= now.getTime()) {
       errors.dateTime = "Date and time cannot be in the past";
     }
   }
+
+  return errors;
 }

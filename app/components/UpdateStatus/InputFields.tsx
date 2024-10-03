@@ -1,3 +1,4 @@
+import tripStatuses from "@/app/constants/tripStatuses";
 import SelectInput from "@/app/utils/SelectInput";
 import TextInput from "@/app/utils/TextInput";
 import { Transporter, TripStatus } from "@/types";
@@ -9,7 +10,7 @@ type InputFields = {
   ) => void;
   errors: { [key: string]: string } | null;
   formData: {
-    dateTime: Date;
+    dateTime: string;
     transporter?: Transporter;
     tripStatus?: TripStatus;
   };
@@ -22,19 +23,12 @@ export default function InputFields({
   setTripStatus,
   formData,
 }: InputFields) {
-  const transporterOptions = [
-    "Booked",
-    "In Transit",
-    "Reached Destination",
-    "Delivered",
-  ];
-
   return (
     <div>
       <div className="mb-[24px]">
         <div className="text-fs-12 font-bold mb-2">Transporter</div>
         <SelectInput
-          options={transporterOptions}
+          options={tripStatuses}
           setTripStatus={setTripStatus}
           value={formData.tripStatus as string}
         />
@@ -44,6 +38,7 @@ export default function InputFields({
         <TextInput
           type="datetime-local"
           placeholder="Placeholder"
+          name="dateTime"
           onChange={onChangeHandler}
         />
       </div>

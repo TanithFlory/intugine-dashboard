@@ -25,9 +25,10 @@ export default function AddTrip({
   const { sendRequest, loading, apiError, response } = useApiCall();
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrors({});
     setErrors(validateForm(formData));
 
-    if (errors) return;
+    if (JSON.stringify(errors).length === 0) return;
 
     await sendRequest("/api/trips/add-trip", "POST", formData);
   }
@@ -35,6 +36,7 @@ export default function AddTrip({
   function onChangeHandler(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
+    setErrors({});
     const target = e.target;
     setFormData((prev) => {
       return {

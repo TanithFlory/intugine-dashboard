@@ -1,3 +1,4 @@
+"use client"
 import { calculateTATStatus } from "@/app/utility-functions/getTatStatus";
 import Status from "@/app/utils/Status";
 import { StatusType, Trip } from "@/types";
