@@ -19,7 +19,6 @@ type InputFields = {
 
 export default function InputFields({
   onChangeHandler,
-  setTransporter,
   setTripStatus,
   formData,
 }: InputFields) {

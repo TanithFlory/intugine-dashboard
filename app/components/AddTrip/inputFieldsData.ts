@@ -1,5 +1,3 @@
-import { Input } from "postcss";
-
 interface TextInputField {
   label: string;
   type: "text" | "tel";

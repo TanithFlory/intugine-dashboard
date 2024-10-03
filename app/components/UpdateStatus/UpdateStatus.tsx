@@ -1,5 +1,5 @@
 import PrimaryButton from "@/app/utils/PrimaryButton";
-import { CloseModalType, StatusType, Transporter, TripStatus } from "@/types";
+import { CloseModalType, TripStatus } from "@/types";
 import CloseModal from "@/app/utils/CloseModal";
 import InputFields from "./InputFields";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -17,7 +17,7 @@ export default function UpdateStatus({
     dateTime: new Date(),
   });
 
-  const [errors, setErrors] = useState<{ [key: string]: string } | null>(null);
+  const [errors, _setErrors] = useState<{ [key: string]: string } | null>(null);
   const { loading, apiError, response, sendRequest } = useApiCall();
 
   function onChangeHandler(

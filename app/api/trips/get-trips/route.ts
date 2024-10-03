@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
@@ -18,7 +18,7 @@ const validFilters = new Map<string, boolean>([
   ["createdAt", true],
 ]);
 
-export async function GET(req: NextRequest, _res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url as string);
     const page = Number(searchParams.get("page"));

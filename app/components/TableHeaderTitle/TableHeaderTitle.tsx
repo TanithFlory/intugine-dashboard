@@ -12,7 +12,6 @@ export default function TableHeaderTitle({
   width,
   label,
   index,
-  order,
   ...rest
 }: TableHeaderTitleProps) {
   return (

@@ -1,8 +1,9 @@
 import { InputHTMLAttributes } from "react";
 
-interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {}
-
-function TextInput({ className, ...props }: TextInputProps) {
+function TextInput({
+  className,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}

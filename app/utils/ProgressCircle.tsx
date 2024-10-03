@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function ProgressCircle() {
-  const [percentage, setPercentage] = useState(80);
+  const [percentage, _setPercentage] = useState(80);
 
   const dashArray = `${percentage}, 100`;
 
