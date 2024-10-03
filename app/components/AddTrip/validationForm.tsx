@@ -1,5 +1,12 @@
 import { AddTripForm } from "@/types";
-
+const transporters = [
+  "Bluedart",
+  "DHL",
+  "Delivery",
+  "DTDC",
+  "Gati",
+  "Safexpress",
+];
 export function validateForm(formData: AddTripForm) {
   const errors: { [key: string]: string } = {};
   const { tripId, transporter, source, dest, phoneNumber } = formData;
@@ -8,6 +15,9 @@ export function validateForm(formData: AddTripForm) {
     (field) => !field.toString().trim()
   );
 
+  if (!transporters.includes(transporter)) {
+    errors.transporter = "Select a valid transporter";
+  }
   if (fieldEmpty) {
     errors.global = "All the fields are mandatory.";
   }

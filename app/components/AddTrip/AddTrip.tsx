@@ -24,6 +24,9 @@ export default function AddTrip({
   async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrors(validateForm(formData));
+
+    if (errors) return;
+
     await sendRequest("/api/trips/add-trip", "POST", formData);
   }
 
@@ -67,7 +70,7 @@ export default function AddTrip({
         />
         <PrimaryButton
           text="Add trip"
-          className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[77px] text-black"
+          className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[77px] text-buttonColor"
           type="submit"
           isLoading={loading}
           isDisabled={loading}
