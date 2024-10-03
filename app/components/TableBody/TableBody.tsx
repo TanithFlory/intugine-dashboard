@@ -5,7 +5,7 @@ import Status from "@/app/utils/Status";
 import { StatusType, Trip } from "@/types";
 
 export default function TableBody({ trips }: { trips: Trip[] }) {
-  const { setSelectedTripIds } = useTripContext();
+  const { selectedTripIds, setSelectedTripIds } = useTripContext();
   function handleCheckboxChange(tripId: string) {
     setSelectedTripIds((prevIds: string[]) => {
       if (prevIds.includes(tripId)) {
@@ -41,6 +41,7 @@ export default function TableBody({ trips }: { trips: Trip[] }) {
                 type="checkbox"
                 className="w-[16px] accent-black h-[16px]"
                 onChange={() => handleCheckboxChange(tripId)}
+                checked={selectedTripIds.includes(tripId)}
               />
             </td>
             <td className="w-[112px]">{tripId}</td>

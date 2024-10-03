@@ -5,6 +5,8 @@ import InputFields from "./InputFields";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useApiCall } from "@/app/custom-hooks/useApiCall";
 import { validateForm } from "./validationForm";
+import { revalidatePath } from "next/cache";
+import clearCachesByServerAction from "@/app/utility-functions/revalidate";
 
 export default function UpdateStatus({
   handleCloseModal,
@@ -50,6 +52,7 @@ export default function UpdateStatus({
       ...formData,
       tripIds: selectedTripIds,
     });
+    clearCachesByServerAction("/");
   }
 
   return (
