@@ -1,40 +1,62 @@
 import TextInput from "@/app/utils/TextInput";
 import SelectInput from "@/app/utils/SelectInput";
+import { AddTripForm, Transporter } from "@/types";
+import inputFields from "./inputFieldsData";
+import { ChangeEvent } from "react";
 
-export default function InputFields() {
-  const inputFields = [
-    [
-      { label: "Trip id", type: "text", placeholder: "Placeholder" },
-      {
-        label: "Transporter",
-        type: "dropdown",
-        options: ["Bluedart", "DHL", "Delhivery", "DTDC", "Gati", "Safexpress"],
-      },
-    ],
-    [
-      { label: "Source", type: "text", placeholder: "Placeholder" },
-      { label: "Destination", type: "text", placeholder: "Placeholder" },
-    ],
-    [{ label: "Phone", type: "tel", placeholder: "Placeholder" }],
-  ];
+type InputFields = {
+  onChangeHandler: (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  formData: AddTripForm;
+  setTransporter: (transporter: Transporter) => void;
+  errors: { [key: string]: string } | null;
+};
 
+export default function InputFields({
+  onChangeHandler,
+  formData,
+  setTransporter,
+  errors,
+}: InputFields) {
   return (
-    <div>
+    <div className="mb-8">
       {inputFields.map((row, rowIndex) => (
         <div
-          className="flex items-center gap-[40px] mb-[24px]"
+          className={`flex items-center gap-[40px] ${
+            rowIndex + 1 === inputFields.length ? "" : "mb-[24px]"
+          }`}
           key={`row-${rowIndex}`}
         >
-          {row.map((field, index) => (
-            <div key={`input-${rowIndex}${index}`}>
-              <div className="text-fs-12 font-bold mb-2">{field.label}</div>
-              {field.type === "dropdown" ? (
-                <SelectInput options={field.options as string[]} />
-              ) : (
-                <TextInput type={field.type} placeholder={field.placeholder} />
-              )}
-            </div>
-          ))}
+          {row.map(
+            ({ type, label, options, placeholder, name, maxLength }, index) => (
+              <div key={`input-${rowIndex}${index}`}>
+                <div className="text-fs-12 font-bold mb-2">{label}</div>
+                {type === "dropdown" ? (
+                  <SelectInput
+                    options={(options || []) as Transporter[]}
+                    setTransporter={setTransporter}
+                    value={formData.transporter}
+                  />
+                ) : (
+                  <TextInput
+                    type={type}
+                    placeholder={placeholder}
+                    onChange={onChangeHandler}
+                    value={formData[name as keyof AddTripForm]}
+                    name={name}
+                    maxLength={maxLength}
+                    required
+                  />
+                )}
+                {errors?.[name] && (
+                  <div className="text-fs-12 text-red-500 my-1">
+                    {errors[name] || errors.global}
+                  </div>
+                )}
+              </div>
+            )
+          )}
         </div>
       ))}
     </div>

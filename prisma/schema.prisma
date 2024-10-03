@@ -23,8 +23,8 @@ enum StatusCode {
 }
 
 model Trip {
-  id                String     @unique @map("_id")
-  tripId            String     @unique
+  id                String     @unique @default(uuid()) @map("_id")
+  tripId            String
   transporter       String
   tripStartTime     DateTime
   currentStatus     Status

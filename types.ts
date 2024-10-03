@@ -9,6 +9,22 @@ export type SearchParams = { [key: string]: string | string[] | undefined };
 
 export type StatusType = "On Time" | "Delayed" | "Other";
 
+export type Transporter =
+  | "Bluedart"
+  | "DHL"
+  | "Delivery"
+  | "DTDC"
+  | "Gati"
+  | "Safexpress";
+
+export interface AddTripForm {
+  tripId: string;
+  transporter: Transporter | "";
+  source: string;
+  dest: string;
+  phoneNumber: number;
+}
+
 export type CloseModalType = React.MouseEvent<HTMLDivElement>;
 
 export type Trip = {
