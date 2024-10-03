@@ -14,7 +14,9 @@ export default function useModal() {
     return !isBackdrop && setIsModalOpen(false);
   }
 
-  function handleCloseModal(e: React.MouseEvent<HTMLDivElement>) {
+  function handleCloseModal(
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
+  ) {
     if (e.target === e.currentTarget) {
       setIsModalOpen(false);
     }

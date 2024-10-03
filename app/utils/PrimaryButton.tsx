@@ -4,7 +4,7 @@ import Loader from "./Loader";
 interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   isLoading?: boolean;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }
 
 function PrimaryButton({

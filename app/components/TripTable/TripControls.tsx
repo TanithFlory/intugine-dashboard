@@ -14,8 +14,10 @@ type ModalComponentMap = {
 export default function TripControls() {
   const { isModalOpen, openModal, closeModal, handleCloseModal } = useModal();
   const components: ModalComponentMap = {
-    addTrip: <AddTrip handleCloseModal={handleCloseModal} />,
-    updateStatus: <UpdateStatus handleCloseModal={handleCloseModal} />,
+    addTrip: (
+      <AddTrip handleCloseModal={handleCloseModal} closeModal={closeModal} />
+    ),
+    updateStatus: <UpdateStatus handleCloseModal={handleCloseModal} closeModal={closeModal}/>,
   };
   const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
     null

@@ -8,8 +8,10 @@ import { useApiCall } from "@/app/custom-hooks/useApiCall";
 
 export default function AddTrip({
   handleCloseModal,
+  closeModal,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
+  closeModal: (e: React.MouseEvent<any>) => void;
 }) {
   const [formData, setFormData] = useState<AddTripForm>({
     tripId: "",
@@ -67,6 +69,7 @@ export default function AddTrip({
           className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[98px] text-black"
           type="reset"
           isDisabled={loading}
+          onClick={closeModal}
         />
         <PrimaryButton
           text="Add trip"

@@ -9,6 +9,13 @@ export type SearchParams = { [key: string]: string | string[] | undefined };
 
 export type StatusType = "On Time" | "Delayed" | "Other";
 
+export type TripStatus =
+  | "Booked"
+  | "In Transit"
+  | "Reached Destination"
+  | "Delivered"
+  | "Update Status";
+
 export type Transporter =
   | "Bluedart"
   | "DHL"
@@ -25,7 +32,7 @@ export interface AddTripForm {
   phoneNumber: number;
 }
 
-export type CloseModalType = React.MouseEvent<HTMLDivElement>;
+export type CloseModalType = any;
 
 export type Trip = {
   _id: string;
