@@ -16,7 +16,7 @@ export default function TableHeaderTitle({
   ...rest
 }: TableHeaderTitleProps) {
   return (
-    <th
+    <div
       className={`box-border text-fs-12 ${width} ${
         index === 0 ? "flex items-center justify-center" : ""
       }`}
@@ -30,6 +30,6 @@ export default function TableHeaderTitle({
           <Image height={15} width={15} alt="sort" src={images.ascending} />
         </div>
       )}
-    </th>
+    </div>
   );
 }

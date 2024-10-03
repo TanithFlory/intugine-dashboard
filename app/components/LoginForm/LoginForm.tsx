@@ -1,6 +1,8 @@
 "use client";
 import TextInput from "@/app/utils/TextInput";
+import { setCookie } from "cookies-next";
 import { ChangeEvent, useState } from "react";
+// import { cookies } from "next/headers";
 
 export default function LoginForm() {
   const [loginDetails, setLoginDetails] = useState({
@@ -20,11 +22,11 @@ export default function LoginForm() {
     const { username, password } = loginDetails;
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}protocol/openid-connect/token`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
+          body: JSON.stringify({
             client_id: process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID as string,
             username,
             password,
@@ -32,15 +34,16 @@ export default function LoginForm() {
           }),
         }
       );
-
       const data = await response.json();
 
       if (!response.ok) {
         return setError(data.error_description);
       }
+      setCookie("accessToken", data.access_token, {
+        maxAge: 60 * 6 * 24,
+      });
 
-      localStorage.setItem("accessToken", data.access_token);
-      window.location.href = "/";
+      window.location.href = process.env.NEXT_PUBLIC_BASE_URL as string;
     } catch (error) {
       console.log(error);
     }
