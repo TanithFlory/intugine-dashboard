@@ -29,18 +29,17 @@ Make sure Docker is installed on your machine. You can download and install Dock
    ```bash
    docker compose up --build
    ```
+
    This command will spin up two containers: one for the Next.js app and one for Keycloak.
 
    **Note: The Keycloak container may take some time to initialize.**
 
-
 4. **Access the Application**
    Once both containers are running, visit the following URL in your browser:
-
-**http://localhost:3000**
+   **http://localhost:3000**
 
 5. **Guest - account**
-   **username**:ioscrape360@gmail.com
-   **password**:123123!Aa
+   **username**: ioscrape360@gmail.com  
+   **password**: 123123!Aa
 
    **Note: You will get server error if keycloak container is not fully running.**
