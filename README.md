@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Intugine Dashboard
 
-## Getting Started
+## Prerequisites
+Make sure Docker is installed on your machine. You can download and install Docker from [here](https://www.docker.com/get-started).
 
-First, run the development server:
+## Running the App with Docker
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Steps:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the Repository**  
+   First, clone the repository by running the following command:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   git clone https://github.com/TanithFlory/intugine-dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Change directory to intugine-dashboard**
 
-## Learn More
+    ```bash
+    cd intugine-dashboard
 
-To learn more about Next.js, take a look at the following resources:
+3. **Build and Start the Containers**
+    Run the following command to build and start the Docker containers for both Next.js and Keycloak:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    ```bash
+    docker compose up --build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    This command will spin up two containers: one for the Next.js app and one for Keycloak.
 
-## Deploy on Vercel
+    **Note: The Keycloak container may take some time to initialize.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Access the Application**
+Once both containers are running, visit the following URL in your browser:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**http://localhost:3000**
