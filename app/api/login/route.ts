@@ -26,7 +26,10 @@ export async function POST(req: NextRequest) {
     const json = await response.json();
 
     if (json?.error) {
-      return NextResponse.json({ message: "Invalid credentials" });
+      return NextResponse.json(
+        { message: json.error_description },
+        { status: 401 }
+      );
     }
 
     cookies().set("accessToken", json.access_token, {
@@ -34,9 +37,9 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
     });
 
-    return NextResponse.json({ message: "Successful" });
+    return NextResponse.json({ message: "Successful" }, { status: 200 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ message: "Server error" });
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

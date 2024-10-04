@@ -36,18 +36,10 @@ export default function LoginForm() {
         }
       );
       const data = await response.json();
-
-      if (!response.ok) {
+      if (response.status !== 200) {
         return setError(data.message);
       }
 
-      if (typeof data.access_token === undefined) {
-        return setError(data.message);
-      }
-
-      setCookie("accessToken", data.access_token, {
-        maxAge: 60 * 6 * 24,
-      });
       window.location.href = process.env.NEXT_PUBLIC_BASE_URL as string;
     } catch (error) {
       console.log(error);
