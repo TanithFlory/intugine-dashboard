@@ -39,6 +39,7 @@ export default async function TripTable({
             currentPage={Number(page)}
             resultsPerPage={Number(resultsPerPage)}
             order={order as string}
+            trips={trips}
           />
           <div className="overflow-y-scroll overflow-x-auto h-[500px]">
             <table className="min-w-full table-auto text-fs-12 ">

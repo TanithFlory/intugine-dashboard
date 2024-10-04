@@ -6,20 +6,20 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useApiCall } from "@/app/custom-hooks/useApiCall";
 import { validateForm } from "./validationForm";
 import clearCachesByServerAction from "@/app/utility-functions/revalidate";
+import { useTripContext } from "@/app/context/TripContext";
 
 export default function UpdateStatus({
   handleCloseModal,
   onClickClose,
-  selectedTripIds,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
   onClickClose: () => void;
-  selectedTripIds: string[];
 }) {
   const [formData, setFormData] = useState({
     tripStatus: "Update Status" as TripStatus,
     dateTime: "",
   });
+  const { selectedTripIds, setSelectedTripIds } = useTripContext();
 
   const [errors, setErrors] = useState<{ [key: string]: string } | null>(null);
   const { loading, apiError, response, sendRequest, setApiError } =
@@ -62,6 +62,7 @@ export default function UpdateStatus({
     });
     clearCachesByServerAction("/");
     setTimeout(() => {
+      setSelectedTripIds([]);
       onClickClose();
     }, 1500);
   }

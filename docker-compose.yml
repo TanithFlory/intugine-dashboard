@@ -1,18 +1,18 @@
 services:
-  nnextjs:
-    build:
-      context: .
-      dockerfile: Dockerfile.nextjs
-    ports:
-      - "3000:3000"
-    environment:
-      NEXTAUTH_URL: ${NEXTAUTH_URL}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: ${NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}
-      NEXT_PUBLIC_KEYCLOAK_BASE_URL: http://keycloak:8080/realms/intugine/
-      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
-    depends_on:
-      - keycloak
+  # nnextjs:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.nextjs
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     NEXTAUTH_URL: ${NEXTAUTH_URL}
+  #     NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+  #     NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: ${NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}
+  #     NEXT_PUBLIC_KEYCLOAK_BASE_URL: http://keycloak:8080/realms/intugine/
+  #     NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+  #   depends_on:
+  #     - keycloak
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest

@@ -18,13 +18,15 @@ export default function TripControls() {
   const { selectedTripIds } = useTripContext();
   const components: ModalComponentMap = {
     addTrip: (
-      <AddTrip handleCloseModal={handleCloseModal} onClickClose={onClickClose} />
+      <AddTrip
+        handleCloseModal={handleCloseModal}
+        onClickClose={onClickClose}
+      />
     ),
     updateStatus: (
       <UpdateStatus
         handleCloseModal={handleCloseModal}
         onClickClose={onClickClose}
-        selectedTripIds={selectedTripIds}
       />
     ),
   };
