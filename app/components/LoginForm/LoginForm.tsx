@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/app/utils/Loader";
 import TextInput from "@/app/utils/TextInput";
 import { setCookie } from "cookies-next";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +11,7 @@ export default function LoginForm() {
     password: "",
   });
   const [error, setError] = useState("");
-
+  const [loading, setLoading] = useState(false);
   function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
     const target = e.target;
     setError("");
@@ -20,6 +21,7 @@ export default function LoginForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setLoading(true);
     const { username, password } = loginDetails;
     try {
       const response = await fetch(
@@ -43,6 +45,8 @@ export default function LoginForm() {
       window.location.href = process.env.NEXT_PUBLIC_BASE_URL as string;
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -76,8 +80,11 @@ export default function LoginForm() {
 
       <div className="text-fs-12 text-buttonColor mb-4">Forgot Password?</div>
 
-      <button className="w-[280px] bg-buttonColor rounded-[4px] text-fs-12 text-white h-[35px]">
-        LOGIN
+      <button
+        className="w-[280px] bg-buttonColor rounded-[4px] text-fs-12 text-white h-[35px] flex items-center justify-center"
+        disabled={loading}
+      >
+        {loading ? <Loader /> : "LOGIN"}
       </button>
     </form>
   );
