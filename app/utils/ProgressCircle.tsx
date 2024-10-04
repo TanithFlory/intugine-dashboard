@@ -1,10 +1,5 @@
-"use client";
-import { useState } from "react";
-
-export default function ProgressCircle() {
-  const [percentage, _setPercentage] = useState(80);
-
-  const dashArray = `${percentage}, 100`;
+export default function ProgressCircle({ progress }: { progress: number }) {
+  const dashArray = `${progress}, 100`;
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -33,7 +28,7 @@ export default function ProgressCircle() {
           textAnchor="middle"
           className="fill-[#666666] text-[8px]  font-bold"
         >
-          {percentage}%
+          {progress.toFixed(0)}%
         </text>
       </svg>
     </div>

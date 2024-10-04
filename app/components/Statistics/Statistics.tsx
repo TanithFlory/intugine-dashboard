@@ -40,7 +40,7 @@ export default async function Statistics({
             </div>
             <div className="w-[1px] h-[64px] bg-[#E0E0E0] mx-[16px]"></div>
             <div className="w-[103px]">
-              <ProgressCircle />
+              <ProgressCircle progress={(deliveredCount * 100) / totalCount} />
             </div>
           </StatisticsWrapper>
         </Link>

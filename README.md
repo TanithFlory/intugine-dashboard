@@ -43,3 +43,5 @@ Make sure Docker is installed on your machine. You can download and install Dock
 5. **Guest - account**
    **username**:ioscrape360@gmail.com
    **password**:123123!Aa
+
+   **Note: You will get server error if keycloak container is not fully running.**
