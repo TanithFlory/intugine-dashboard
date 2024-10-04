@@ -1,12 +1,17 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+const keycloakBaseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8080"
+    : "http://keycloak:8080";
+
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     const { client_id, username, password } = data;
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}protocol/openid-connect/token`,
+      `${keycloakBaseUrl}/realms/intugine/protocol/openid-connect/token`,
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -32,5 +37,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Successful" });
   } catch (error) {
     console.log(error);
+    return NextResponse.json({ message: "Server error" });
   }
 }

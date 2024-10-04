@@ -9,10 +9,10 @@ import clearCachesByServerAction from "@/app/utility-functions/revalidate";
 
 export default function AddTrip({
   handleCloseModal,
-  closeModal,
+  onClickClose,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
-  closeModal: (e: React.MouseEvent<any>) => void;
+  onClickClose: () => void;
 }) {
   const [formData, setFormData] = useState<AddTripForm>({
     tripId: "",
@@ -23,38 +23,51 @@ export default function AddTrip({
   });
   const [errors, setErrors] = useState<{ [key: string]: string } | null>(null);
 
-  const { sendRequest, loading, apiError, response } = useApiCall();
-  async function submitHandler(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setErrors({});
-    setErrors(validateForm(formData));
+  const { sendRequest, loading, apiError, response, setApiError } =
+    useApiCall();
 
-    if (JSON.stringify(errors).length === 0) return;
+  async function submitHandler(e: FormEvent<HTMLFormElement>) {
+    setApiError(" ");
+    e.preventDefault();
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
 
     await sendRequest("/api/trips/add-trip", "POST", formData);
     clearCachesByServerAction("/");
+    setTimeout(() => {
+      onClickClose();
+    }, 1500);
   }
 
   function onChangeHandler(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
-    setErrors({});
     const target = e.target;
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [target.name]: target.value,
-      };
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [target.name]: target.value,
+    }));
+
+    if (errors) {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        delete newErrors[target.name];
+        return Object.keys(newErrors).length > 0 ? newErrors : null;
+      });
+    }
   }
 
   function setTransporter(transporter: Transporter) {
+    console.log(transporter);
     setFormData((prev) => ({ ...prev, transporter }));
   }
 
   return (
     <form
-      className="bg-white  pt-[20px] w-[648px] pb-[16px] max-h-[480px] h-full relative rounded-[8px]"
+      className="bg-white pt-[20px] w-[648px] pb-[16px] max-h-[480px] h-full relative rounded-[8px]"
       onSubmit={submitHandler}
     >
       <div className="px-[24px]">
@@ -73,7 +86,7 @@ export default function AddTrip({
           className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[98px] text-black"
           type="reset"
           isDisabled={loading}
-          onClick={closeModal}
+          onClick={onClickClose}
         />
         <PrimaryButton
           text="Add trip"
@@ -85,7 +98,7 @@ export default function AddTrip({
       </div>
       {(apiError || response) && (
         <div
-          className={`text-fs-12  text-center ${
+          className={`text-fs-12 text-center ${
             apiError ? "text-red-500" : "text-green-500"
           }`}
         >

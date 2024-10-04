@@ -5,16 +5,15 @@ import InputFields from "./InputFields";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useApiCall } from "@/app/custom-hooks/useApiCall";
 import { validateForm } from "./validationForm";
-import { revalidatePath } from "next/cache";
 import clearCachesByServerAction from "@/app/utility-functions/revalidate";
 
 export default function UpdateStatus({
   handleCloseModal,
-  closeModal,
+  onClickClose,
   selectedTripIds,
 }: {
   handleCloseModal: (e: CloseModalType) => void;
-  closeModal: (e: React.MouseEvent<any>) => void;
+  onClickClose: () => void;
   selectedTripIds: string[];
 }) {
   const [formData, setFormData] = useState({
@@ -23,19 +22,25 @@ export default function UpdateStatus({
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string } | null>(null);
-  const { loading, apiError, response, sendRequest } = useApiCall();
+  const { loading, apiError, response, sendRequest, setApiError } =
+    useApiCall();
 
   function onChangeHandler(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
-    setErrors({});
     const target = e.target;
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [target.name]: target.value,
-      };
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [target.name]: target.value,
+    }));
+
+    if (errors) {
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        delete newErrors[target.name];
+        return Object.keys(newErrors).length > 0 ? newErrors : null;
+      });
+    }
   }
 
   function setTripStatus(tripStatus: TripStatus) {
@@ -43,23 +48,30 @@ export default function UpdateStatus({
   }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    setApiError(" ");
     e.preventDefault();
-    setErrors({});
-    const errors = validateForm(formData);
-    setErrors(errors);
-    if (JSON.stringify(errors).length === 0) return;
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
     await sendRequest("/api/trips/update-trip", "POST", {
       ...formData,
       tripIds: selectedTripIds,
     });
     clearCachesByServerAction("/");
+    setTimeout(() => {
+      onClickClose();
+    }, 1500);
   }
+
   return (
     <form
-      className="bg-white pt-[20px] pb-[16px] w-[328px] h-[322px] h-full rounded-[8px] relative"
+      className="bg-white pt-[20px] pb-[16px] w-[328px] h-full rounded-[8px] relative"
       onSubmit={onSubmit}
     >
-      <div className=" px-[24px] ">
+      <div className="px-[24px]">
         <h3 className="text-fs-20 font-bold mb-[36px]">Update status</h3>
         <InputFields
           onChangeHandler={onChangeHandler}
@@ -74,7 +86,7 @@ export default function UpdateStatus({
           className="bg-white border-borderColor border-[1px] text-fs-12 max-w-[98px] text-black"
           type="reset"
           isDisabled={loading}
-          onClick={closeModal}
+          onClick={handleCloseModal}
         />
         <PrimaryButton
           text="Update status"

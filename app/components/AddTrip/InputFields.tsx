@@ -35,6 +35,7 @@ export default function InputFields({
                 {type === "dropdown" ? (
                   <SelectInput
                     options={(options || []) as Transporter[]}
+                    isTransport={true}
                     setTransporter={setTransporter}
                     value={formData.transporter}
                   />

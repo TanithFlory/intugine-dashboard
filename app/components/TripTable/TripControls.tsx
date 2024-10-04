@@ -13,16 +13,17 @@ type ModalComponentMap = {
 };
 
 export default function TripControls() {
-  const { isModalOpen, openModal, closeModal, handleCloseModal } = useModal();
+  const { isModalOpen, openModal, closeModal, handleCloseModal, onClickClose } =
+    useModal();
   const { selectedTripIds } = useTripContext();
   const components: ModalComponentMap = {
     addTrip: (
-      <AddTrip handleCloseModal={handleCloseModal} closeModal={closeModal} />
+      <AddTrip handleCloseModal={handleCloseModal} onClickClose={onClickClose} />
     ),
     updateStatus: (
       <UpdateStatus
         handleCloseModal={handleCloseModal}
-        closeModal={closeModal}
+        onClickClose={onClickClose}
         selectedTripIds={selectedTripIds}
       />
     ),

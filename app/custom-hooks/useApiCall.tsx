@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type UseApiCallReturn = {
   apiError: string;
   loading: boolean;
   sendRequest: (url: string, method: string, body?: object) => Promise<any>;
+  setApiError: Dispatch<SetStateAction<string>>;
   response: string;
 };
 
@@ -44,5 +45,5 @@ export function useApiCall(): UseApiCallReturn {
     }
   }
 
-  return { apiError, loading, sendRequest, response };
+  return { apiError, loading, sendRequest, response, setApiError };
 }

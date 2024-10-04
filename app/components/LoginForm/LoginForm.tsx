@@ -13,16 +13,17 @@ export default function LoginForm() {
 
   function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
     const target = e.target;
-
+    setError("");
     setLoginDetails((prev) => ({ ...prev, [target.name]: target.value }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError("");
     const { username, password } = loginDetails;
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -37,8 +38,13 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        return setError(data.error_description);
+        return setError(data.message);
       }
+
+      if (typeof data.access_token === undefined) {
+        return setError(data.message);
+      }
+
       setCookie("accessToken", data.access_token, {
         maxAge: 60 * 6 * 24,
       });

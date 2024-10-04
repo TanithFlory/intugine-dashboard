@@ -8,7 +8,6 @@ export function validateForm(formData: AddTripForm) {
   const fieldEmpty = [tripId, transporter, source, dest, phoneNumber].some(
     (field) => !field.toString().trim()
   );
-
   if (!transporters.includes(transporter)) {
     errors.transporter = "Select a valid transporter";
   }
@@ -32,5 +31,5 @@ export function validateForm(formData: AddTripForm) {
     errors.phoneNumber = "Phone number must be 10 digits.";
   }
 
-  return Object.keys(errors).length > 0 ? errors : null;
+  return errors;
 }

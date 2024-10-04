@@ -8,6 +8,9 @@ export default function useModal() {
     setIsModalOpen(true);
   }
 
+  function onClickClose() {
+    setIsModalOpen(false);
+  }
   function closeModal(e: React.MouseEvent<HTMLDivElement>) {
     const isBackdrop =
       e.currentTarget.getAttribute("aria-label") === "backdrop";
@@ -22,5 +25,5 @@ export default function useModal() {
     }
   }
 
-  return { isModalOpen, openModal, closeModal, handleCloseModal };
+  return { isModalOpen, openModal, closeModal, handleCloseModal, onClickClose };
 }
