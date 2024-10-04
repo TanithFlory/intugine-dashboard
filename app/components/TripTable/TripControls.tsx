@@ -15,7 +15,6 @@ type ModalComponentMap = {
 export default function TripControls() {
   const { isModalOpen, openModal, closeModal, handleCloseModal } = useModal();
   const { selectedTripIds } = useTripContext();
-  console.log(selectedTripIds)
   const components: ModalComponentMap = {
     addTrip: (
       <AddTrip handleCloseModal={handleCloseModal} closeModal={closeModal} />
@@ -40,20 +39,22 @@ export default function TripControls() {
   }
   return (
     <>
-      <div className="flex items-center gap-[17px] w-[210px]">
-        <PrimaryButton
-          text="Update status"
-          className="max-w-[96px] bg-white border-[1px] border-buttonColor text-buttonColor"
-          type="button"
-          onClick={controlClickHandler}
-          name="updateStatus"
-        />
+      <div className="flex items-center justify-end gap-[17px] w-[210px]">
+        {selectedTripIds.length > 0 ? (
+          <PrimaryButton
+            text="Update status"
+            className="max-w-[96px] bg-white border-[1px] border-buttonColor text-buttonColor"
+            type="button"
+            onClick={controlClickHandler}
+            name="updateStatus"
+          />
+        ) : null}
         <PrimaryButton
           text="Add trip"
           type="button"
           name="addTrip"
           onClick={controlClickHandler}
-          className="max-w-[96px] bg-buttonColor"
+          className="max-w-[96px] bg-buttonColor text-white"
         />
       </div>
       {isModalOpen && modalComponent ? (

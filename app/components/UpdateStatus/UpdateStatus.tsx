@@ -54,7 +54,6 @@ export default function UpdateStatus({
     });
     clearCachesByServerAction("/");
   }
-
   return (
     <form
       className="bg-white pt-[20px] pb-[16px] w-[328px] h-[322px] h-full rounded-[8px] relative"

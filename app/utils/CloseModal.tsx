@@ -8,11 +8,13 @@ export default function CloseModal({
   handleCloseModal: (e: CloseModalType) => void;
 }) {
   return (
-    <div
-      className="w-[32px] h-[32px]  absolute top-[20px] right-[32px] flex items-center justify-center cursor-pointer"
-      onClick={handleCloseModal}
-    >
-      <Image src={images.cross} alt="Close" className="h-[16px] w-[16px]" />
+    <div className="w-[16px] h-[16px]  absolute top-[32px] right-[34px] flex items-center justify-center cursor-pointer">
+      <Image
+        src={images.cross}
+        alt="Close"
+        className="h-full w-full"
+        onClick={handleCloseModal}
+      />
     </div>
   );
 }

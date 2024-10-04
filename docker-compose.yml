@@ -1,4 +1,21 @@
+version: '3.8'
+
 services:
+  nnextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: ${NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}
+      NEXT_PUBLIC_KEYCLOAK_BASE_URL: ${NEXT_PUBLIC_KEYCLOAK_BASE_URL}
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+    depends_on:
+      - keycloak
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     environment:
@@ -12,6 +29,6 @@ services:
       - KC_HTTP_ENABLED=true
       - KC_PROXY=edge
     ports:
-      - 8080:8080
+      - "8080:8080"
     command:
       - start-dev
