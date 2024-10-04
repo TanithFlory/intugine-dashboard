@@ -19,12 +19,14 @@ export default async function TripTable({
     resultsPerPage = 10,
     filter = "currentStatus",
     order = "asc",
+    counter,
   } = searchParams || {};
   const trips = await getTrips(
     Number(page),
     Number(resultsPerPage),
     filter as string,
-    order as string
+    order as string,
+    counter as string
   );
 
   return (

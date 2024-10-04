@@ -60,3 +60,9 @@ export type PaginationStats = {
   resultsPerPage: number;
   currentPage: number;
 };
+
+export type TripStats = {
+  totalCount: number;
+  inTransitCount: number;
+  deliveredCount: number;
+};

@@ -2,25 +2,18 @@ import { SearchParams } from "@/types";
 import Navbar from "./components/Navbar/Navbar";
 import Statistics from "./components/Statistics/Statistics";
 import TripTable from "./components/TripTable/TripTable";
-import { redirect } from "next/navigation";
-import { getAccessToken } from "./utility-functions/getAccessToken";
+import { getStats } from "./services/tripService";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const accessToken = getAccessToken();
-  const res = await fetch(`${process.env.NEXT_BASE_URL}/api/trips/get-stats`, {
-    method: "GET",
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  const json = await res.json();
-  const { totalCount, inTransitCount, deliveredCount } = json?.data || {};
+  const {
+    totalCount = 0,
+    inTransitCount = 0,
+    deliveredCount = 0,
+  } = (await getStats()) || {};
   return (
     <>
       <Navbar />
@@ -28,6 +21,7 @@ export default async function Home({
         totalCount={totalCount}
         inTransitCount={inTransitCount}
         deliveredCount={deliveredCount}
+        searchParams={searchParams}
       />
       <TripTable searchParams={searchParams} totalCount={totalCount} />
     </>

@@ -1,6 +1,6 @@
 // services/tripService.ts
 
-import { Trip } from "@/types";
+import { PaginationStats, Trip, TripStats } from "@/types";
 import { cookies } from "next/headers";
 import { getAccessToken } from "../utility-functions/getAccessToken";
 
@@ -33,13 +33,18 @@ export async function getTrips(
   page: number,
   resultsPerPage: number,
   filter: string,
-  order: string
+  order: string,
+  counter: string
 ): Promise<Trip[]> {
   try {
     const accessToken = getAccessToken();
     if (!isNaN(Number(page)) && !isNaN(Number(resultsPerPage))) {
       const res = await fetch(
-        `${process.env.NEXT_BASE_URL}/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}&filter=${filter}&order=${order}`,
+        `${
+          process.env.NEXT_BASE_URL
+        }/api/trips/get-trips?page=${page}&resultsPerPage=${resultsPerPage}&filter=${filter}&order=${order}&counter=${
+          counter || ""
+        }`,
         {
           method: "GET",
           cache: "no-cache",
@@ -59,5 +64,34 @@ export async function getTrips(
   } catch (error) {
     console.error("Error fetching trips:", error);
     return [];
+  }
+}
+
+export async function getStats(): Promise<TripStats | null> {
+  const accessToken = getAccessToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_BASE_URL}/api/trips/get-stats`,
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch trip stats: ${res.statusText}`);
+    }
+
+    const json = await res.json();
+    const { totalCount, inTransitCount, deliveredCount } = json?.data || {};
+
+    return { totalCount, inTransitCount, deliveredCount };
+  } catch (error) {
+    console.error("Error fetching trip stats:", error);
+    return null;
   }
 }

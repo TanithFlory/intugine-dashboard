@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { TripStatus } from "@/types";
+import { PrismaClient, Status } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
@@ -25,13 +26,29 @@ export async function GET(req: NextRequest) {
     const resultsPerPage = Number(searchParams.get("resultsPerPage"));
     let filter = searchParams.get("filter");
     const order = searchParams.get("order");
-
+    const counter = searchParams.get("counter");
     if (filter && !validFilters.has(filter)) {
       filter = "currentStatus";
     }
 
     if (isNaN(page) && isNaN(resultsPerPage))
       return NextResponse.json({ message: "Error" }, { status: 404 });
+
+    if (counter && counter !== "undefined") {
+      const counterTrips = await prisma.trip.findMany({
+        where: {
+          currentStatus: counter as Status,
+        },
+        take: resultsPerPage,
+        skip: (page - 1) * resultsPerPage,
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+      const trips = JSONParseBigInt(counterTrips);
+
+      return NextResponse.json({ data: { trips } });
+    }
 
     const trips = await prisma.trip.findMany({
       take: resultsPerPage,
