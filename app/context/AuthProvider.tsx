@@ -1,42 +1,42 @@
-// "use client";
-// import { createContext, useContext, useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { SessionProvider, signIn, useSession } from "next-auth/react"; // Import useSession
 
-// interface AuthContextType {
-//   isAuthenticated: boolean;
-// }
+interface AuthContextType {
+  isAuthenticated: boolean;
+}
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// interface AuthProviderProps {
-//   children: React.ReactNode;
-// }
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 
-// export function AuthProvider({ children }: AuthProviderProps) {
-//   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-//   const router = useRouter();
+export function AuthProvider({ children }: AuthProviderProps) {
+  const { status } = useSession();
+  const isAuthenticated = status === "authenticated";
+  const router = useRouter();
 
-//   useEffect(() => {
-//     const token = localStorage.getItem("accessToken");
-//     if (token) {
-//       setIsAuthenticated(true);
-//     } else {
-//       setIsAuthenticated(false);
-//       router.push("/login");
-//     }
-//   }, [router]);
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      signIn("keycloak");
+    }
+  }, [status, router]);
 
-//   return (
-//     <AuthContext.Provider value={{ isAuthenticated }}>
-//       {isAuthenticated ? children : null}
-//     </AuthContext.Provider>
-//   );
-// }
+  return (
+    <SessionProvider>
+      <AuthContext.Provider value={{ isAuthenticated }}>
+        {isAuthenticated ? children : null}
+      </AuthContext.Provider>
+    </SessionProvider>
+  );
+}
 
-// export const useAuth = (): AuthContextType => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error("useAuth must be used within an AuthProvider");
-//   }
-//   return context;
-// };
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

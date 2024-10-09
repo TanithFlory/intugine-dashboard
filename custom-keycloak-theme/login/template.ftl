@@ -104,7 +104,7 @@
       </div>
       </div>
       <div class="${properties.kcLoginMainBody!}">
-    <div>
+    <div style="padding:10px">
       <div class="branding-container">
         <div class="logo-container">
             <img src="${url.resourcesPath}/img/intugine.png" alt="logo" class="logo">

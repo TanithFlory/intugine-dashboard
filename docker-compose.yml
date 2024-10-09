@@ -1,5 +1,5 @@
 services:
-  nnextjs:
+  nextjs:
     build:
       context: .
       dockerfile: Dockerfile.nextjs
@@ -28,6 +28,8 @@ services:
       - KC_PROXY=edge
     ports:
       - "8080:8080"
+    volumes:
+      - ./custom-keycloak-theme:/opt/keycloak/themes/custom-theme
     command:
       - start-dev
       - --spi-theme-static-max-age=-1
