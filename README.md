@@ -23,19 +23,26 @@ Make sure Docker is installed on your machine. You can download and install Dock
 
    ```
 
-3. **Build and Start the Containers**
-   Run the following command to build and start the Docker containers for both Next.js and Keycloak:
+3. **Start the application**
+   In the project directory, run the following command to build and start the application:
 
    ```bash
-   docker compose up --build
+   npm run start-all
+
    ```
 
-   This command will spin up two containers: one for the Next.js app and one for Keycloak.
-
+4. **Run Docker Containers**
    **Note: The Keycloak container may take some time to initialize.**
+   Open a new terminal window and run the following command to start the Docker containers for Next.js and Keycloak:\
+
+   ```bash
+   docker compose up
+   
+   ```
 
 4. **Access the Application**
-   Once both containers are running, visit the following URL in your browser:
+   Once both the application and the Docker keycloak container are running, visit the following URL in your browser:
+
    **http://localhost:3000**
 
 5. **Guest - account**
