@@ -33,11 +33,11 @@ Make sure Docker is installed on your machine. You can download and install Dock
 
 4. **Run Docker Containers**
    **Note: The Keycloak container may take some time to initialize.**
-   Open a new terminal window and run the following command to start the Docker containers for Next.js and Keycloak:\
+   Open a new terminal window and run the following command to start the Docker container Keycloak:
 
    ```bash
    docker compose up
-   
+
    ```
 
 4. **Access the Application**
