@@ -5,7 +5,7 @@ export default async function federatedLogout() {
     const response = await fetch("/api/auth/federated-logout");
     const data = await response.json();
     if (response.ok) {
-      await signOut({ redirect: false });
+      await signOut();
       window.location.href = data.url;
       return;
     }

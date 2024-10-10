@@ -1,14 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { getRandomizedTripData } from "./getRandomizedData";
+import { validateForm } from "@/app/components/AddTrip/validationForm";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    const { tripId, transporter, phoneNumber, source, dest } = data;
-
+    const { tripId, transporter, phoneNumber, source, dest } = data || {};
+    const errors = validateForm(data);
+    if (errors) {
+      return NextResponse.json({ message: errors }, { status: 400 });
+    }
+    
     const existingTrip = await prisma.trip.findFirst({
       where: {
         tripId,

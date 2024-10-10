@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 
-const publicRoutes = ["/api/auth", "/api/auth/signin", "/login"];
+const publicRoutes = [
+  "/api/auth",
+  "/api/auth/signin",
+  "/login",
+  "/api/auth/federated-logout",
+];
 
 export async function middleware(req: NextRequest) {
   try {
@@ -14,7 +19,7 @@ export async function middleware(req: NextRequest) {
     const token = await getToken({
       req,
     });
-
+    console.log(token)
     if (!token && !publicRoutes.some((route) => pathname.startsWith(route))) {
       if (pathname.startsWith("/api")) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -24,7 +29,7 @@ export async function middleware(req: NextRequest) {
     }
     return NextResponse.next();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 

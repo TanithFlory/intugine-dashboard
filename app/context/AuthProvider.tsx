@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SessionProvider, signIn, useSession } from "next-auth/react"; // Import useSession
+import FullScreenLoader from "../utils/FullScreenLoader";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -27,7 +28,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   return (
     <SessionProvider>
       <AuthContext.Provider value={{ isAuthenticated }}>
-        {isAuthenticated ? children : null}
+        {isAuthenticated ? children : <FullScreenLoader />}
       </AuthContext.Provider>
     </SessionProvider>
   );

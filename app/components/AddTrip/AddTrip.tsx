@@ -38,7 +38,9 @@ export default function AddTrip({
     await sendRequest("/api/trips/add-trip", "POST", formData);
     clearCachesByServerAction("/");
     setTimeout(() => {
-      onClickClose();
+      if (!apiError) {
+        onClickClose();
+      }
     }, 1500);
   }
 

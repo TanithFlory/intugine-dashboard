@@ -1,7 +1,7 @@
 const transporters = [
   "Bluedart",
   "DHL",
-  "Delivery",
+  "Delhivery",
   "DTDC",
   "Gati",
   "Safexpress",

@@ -36,7 +36,7 @@ export async function getDelayedStats(): Promise<number> {
     const json = await res.json();
     return json.data.delayedCount;
   } catch (error) {
-    console.error("Error fetching delayed stats:", error);
+    console.error("Error fetching delayed stats:");
     return 0;
   }
 }
@@ -73,7 +73,7 @@ export async function getTrips(
     const json = await res.json();
     return json.data?.trips || [];
   } catch (error) {
-    console.error("Error fetching trips:", error);
+    console.error("Error fetching trips:");
     return [];
   }
 }
@@ -98,7 +98,7 @@ export async function getStats(): Promise<TripStats | null> {
 
     return { totalCount, inTransitCount, deliveredCount };
   } catch (error) {
-    console.error("Error fetching trip stats:", error);
+    console.error("Error fetching trip stats:");
     return null;
   }
 }
