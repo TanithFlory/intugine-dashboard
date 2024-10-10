@@ -1,15 +1,15 @@
 import { Trip, TripStats } from "@/types";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 async function getHeaders() {
   const session = await getServerSession(authOptions);
-  const accessToken = (session as any)?.accessToken;
+  const accessToken = session?.accessToken;
 
   if (!accessToken) redirect("/login");
-  
+
   /* need to include cookies for getToken to work on server-side */
   return {
     "Content-Type": "application/json",
