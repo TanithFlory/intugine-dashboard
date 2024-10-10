@@ -49,4 +49,4 @@ Make sure Docker is installed on your machine. You can download and install Dock
    **username**: ioscrape360@gmail.com  
    **password**: 123123!Aa
 
-   **Note: You will get server error if keycloak container is not fully running.**
+   **Note: You will see a infinite loader if keycloak container is not fully running.**
