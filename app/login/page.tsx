@@ -1,23 +1,19 @@
-import { images } from "../constants/constants";
-import Image from "next/image";
-import LoginForm from "../components/LoginForm/LoginForm";
-import LoginBranding from "../components/LoginBranding/LoginBranding";
+"use client";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return (
-    <div className="h-screen w-screen flex">
-      <div className="flex items-center justify-center relative grow basis-[70%] bg-[#F5F8FF] max-lg:hidden">
-        <div className="relative h-full w-full">
-          <Image src={images.loginBg} alt="Login Background" layout="fill" />
-        </div>
-      </div>
+  const { status } = useSession();
 
-      <div className="bg-white flex items-center justify-center grow basis-[30%] max-lg:basis-full">
-        <div className="max-w-[320px] px-2 overflow-x-hidden">
-          <LoginBranding />
-          <LoginForm />
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    if (status === "loading") return; 
+    if (status === "authenticated") {
+      redirect("/");
+    } else {
+      signIn("keycloak");
+    }
+  }, []);
+
+  return null; 
 }

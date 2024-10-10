@@ -1,5 +1,6 @@
 import { TripStatus } from "@/types";
 import { PrismaClient, Status } from "@prisma/client";
+import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
@@ -19,6 +20,14 @@ const validFilters = new Map<string, boolean>([
   ["createdAt", true],
 ]);
 
+const validCounters = [
+  "Booked",
+  "In_Transit",
+  "Reached_Destination",
+  "Delivered",
+  "Delayed",
+];
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url as string);
@@ -34,7 +43,7 @@ export async function GET(req: NextRequest) {
     if (isNaN(page) && isNaN(resultsPerPage))
       return NextResponse.json({ message: "Error" }, { status: 404 });
 
-    if (counter && counter !== "undefined") {
+    if (counter && validCounters.includes(counter)) {
       const counterTrips = await prisma.trip.findMany({
         where: {
           currentStatus: counter as Status,

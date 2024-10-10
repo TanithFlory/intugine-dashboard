@@ -10,8 +10,12 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/api/auth/signin",
+    signIn: "/auth/signin",
   },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -23,6 +27,7 @@ export const authOptions: AuthOptions = {
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
     async session({ session, token }) {
+      (session as any).accessToken = token.accessToken;
       return session;
     },
   },
