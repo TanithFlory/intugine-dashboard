@@ -16,14 +16,31 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const { status } = useSession();
+  const [keycloak, setKeycloak] = useState(false);
   const isAuthenticated = status === "authenticated";
   const router = useRouter();
 
+  async function isKeycloakAvailable() {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER!);
+      if (response.ok) {
+        setKeycloak(true);
+      }
+    } catch (error) {
+      console.error("Keycloak server is not available:", error);
+      setKeycloak(false);
+    }
+  }
+
   useEffect(() => {
+    isKeycloakAvailable();
+    
+    if (!keycloak) return;
+
     if (status === "unauthenticated") {
       signIn("keycloak");
     }
-  }, [status, router]);
+  }, [status, router, keycloak]);
 
   return (
     <SessionProvider>
